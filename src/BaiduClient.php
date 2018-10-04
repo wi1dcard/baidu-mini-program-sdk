@@ -7,10 +7,11 @@ use GuzzleHttp\Client;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
-use BaiduMiniProgram\Exceptions\ResponseException;
+use BaiduMiniProgram\Exceptions\BaiduResponseException;
 use function GuzzleHttp\json_decode;
 use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
 use BaiduMiniProgram\Exceptions\BaiduDecryptException;
+use function GuzzleHttp\Psr7\build_query;
 
 class BaiduClient
 {
@@ -80,7 +81,9 @@ class BaiduClient
             'sk' => $this->appSecret,
         ];
 
-        return new Request('POST', $uri, [], $data);
+        $body = build_query($data);
+
+        return new Request('POST', $uri, [], $body);
     }
 
     /**
@@ -96,7 +99,7 @@ class BaiduClient
         $parsed = json_decode($content, true);
 
         if (isset($parsed['error'])) {
-            throw new ResponseException($parsed['error_description']);
+            throw new BaiduResponseException($parsed['error_description']);
         }
 
         return $parsed;
@@ -114,7 +117,7 @@ class BaiduClient
      * 
      * @throws \InvalidArgumentException
      * @throws BaiduOpenSslException
-     * @throws DecryptException
+     * @throws BaiduDecryptException
      */
     public function decrypt($cipherText, $iv, $sessionKey)
     {
