@@ -1,11 +1,11 @@
 <?php
 
-namespace Alipay\Exception;
+namespace BaiduMiniProgram\Exceptions;
 
 /**
  * 验证签名时，若签名不匹配则抛出。
  */
-class BaiduInvalidSignException extends AlipayException
+class BaiduInvalidSignException extends BaiduException
 {
     protected $sign;
 
