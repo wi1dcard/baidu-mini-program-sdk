@@ -10,8 +10,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use function GuzzleHttp\json_decode;
-use function GuzzleHttp\Psr7\build_query;
 
 class BaiduClient
 {
@@ -84,7 +82,7 @@ class BaiduClient
             'sk'        => $this->appSecret,
         ];
 
-        $body = build_query($data);
+        $body = \GuzzleHttp\Psr7\build_query($data);
 
         return new Request('POST', $uri, [], $body);
     }
@@ -100,7 +98,7 @@ class BaiduClient
     {
         $content = $response->getBody()->getContents();
 
-        $parsed = json_decode($content, true);
+        $parsed = \GuzzleHttp\json_decode($content, true);
 
         if (isset($parsed['error'])) {
             throw new BaiduResponseException($parsed['error_description']);
