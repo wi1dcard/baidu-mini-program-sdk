@@ -9,6 +9,8 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use BaiduMiniProgram\Exceptions\ResponseException;
 use function GuzzleHttp\json_decode;
+use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
+use BaiduMiniProgram\Exceptions\BaiduDecryptException;
 
 class BaiduClient
 {
@@ -65,7 +67,7 @@ class BaiduClient
      *
      * @param string $code
      * @return RequestInterface
-     * 
+     *
      * @see https://smartprogram.baidu.com/docs/develop/api/open_log/#Session-Key/
      */
     protected function buildSessionRequest($code)
@@ -98,5 +100,55 @@ class BaiduClient
         }
 
         return $parsed;
+    }
+
+    /**
+     * 关键数据解密
+     *
+     * @param string $cipherText    待解密数据，即小程序端接口返回的 `data` 字段
+     * @param string $iv            加密向量，即小程序端接口返回的 `iv` 字段
+     * @param string $sessionKey    登录时服务端使用 code 获取
+     * @return string
+     * 
+     * @see self::session()
+     * 
+     * @throws \InvalidArgumentException
+     * @throws BaiduOpenSslException
+     * @throws DecryptException
+     */
+    public function decrypt($cipherText, $iv, $sessionKey)
+    {
+        $sessionKey = base64_decode($sessionKey);
+        $iv = base64_decode($iv);
+        $cipherText = base64_decode($cipherText);
+
+        if (!$sessionKey || !$iv || !$cipherText) {
+            throw new \InvalidArgumentException('Base64 decoding error.');
+        }
+
+        $plainText = openssl_decrypt($cipherText, 'AES-192-CBC', $sessionKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $iv);
+        if ($plainText === false) {
+            throw new BaiduOpenSslException(openssl_error_string());
+        }
+
+        // trim pkcs#7 padding
+        $pad = ord(substr($plainText, -1));
+        $pad = ($pad < 1 || $pad > 32) ? 0 : $pad;
+        $plainText = substr($plainText, 0, strlen($plainText) - $pad);
+
+        // trim header
+        $plainText = substr($plainText, 16);
+        // get content length
+        $unpack = unpack("Nlen/", substr($plainText, 0, 4));
+        // get content
+        $content = substr($plainText, 4, $unpack['len']);
+        // get app_key
+        $appKey = substr($plainText, $unpack['len'] + 4);
+
+        if ($appKey !== $this->appKey) {
+            throw new BaiduDecryptException('Invalid app key.');
+        }
+    
+        return $content;
     }
 }
