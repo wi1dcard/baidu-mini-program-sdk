@@ -7,9 +7,8 @@ namespace BaiduMiniProgram\Exceptions;
  */
 class BaiduBase64Exception extends BaiduException
 {
-    public function __construct($value, $isEncoding = false)
+    public function __construct($value)
     {
-        $verb = $isEncoding ? 'encoded' : 'decoded';
-        parent::__construct("Value `{$value}` cound not be {$verb}");
+        parent::__construct("Value `{$value}` cound not be decoded.");
     }
 }
