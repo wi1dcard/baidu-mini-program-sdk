@@ -1,7 +1,7 @@
 <img src="https://smartprogram.baidu.com/docs/img/logo.png" height="30px"> Baidu Smart Mini-Program SDK for PHP
 ==========
 
-🐾 百度小程序第三方 SDK，助力智能小程序开发。
+🐾 百度小程序第三方 PHP SDK，助力智能小程序开发。
 
 ❤️ 本项目 [GitHub](https://github.com/wi1dcard/baidu-mini-program-sdk-php) / [Gitee(码云)](https://gitee.com/wi1dcard/baidu-mini-program-sdk-php)。
 
