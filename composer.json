@@ -3,7 +3,8 @@
     "description": "百度小程序第三方 SDK，助力智能小程序开发。",
     "type": "library",
     "require": {
-        "php": "^5.4"
+        "php": ">=5.4",
+        "guzzlehttp/guzzle": "^6.0"
     },
     "license": "MIT",
     "authors": [
@@ -11,5 +12,10 @@
             "name": "wi1dcard",
             "email": "wi1dcard@qq.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "BaiduMiniProgram\\" : "src/"
+        }
+    }
 }
