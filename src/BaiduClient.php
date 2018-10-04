@@ -2,15 +2,15 @@
 
 namespace BaiduMiniProgram;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Client;
-use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\Psr7\Request;
-use Psr\Http\Message\ResponseInterface;
-use BaiduMiniProgram\Exceptions\BaiduResponseException;
-use function GuzzleHttp\json_decode;
-use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
 use BaiduMiniProgram\Exceptions\BaiduDecryptException;
+use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
+use BaiduMiniProgram\Exceptions\BaiduResponseException;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use function GuzzleHttp\json_decode;
 use function GuzzleHttp\Psr7\build_query;
 
 class BaiduClient
@@ -19,6 +19,7 @@ class BaiduClient
      * 小程序 App Key
      *
      * @var string
+     *
      * @see https://smartprogram.baidu.com/docs/introduction/register_prepare/
      */
     protected $appKey;
@@ -27,6 +28,7 @@ class BaiduClient
      * 小程序 App Secret
      *
      * @var string
+     *
      * @see https://smartprogram.baidu.com/docs/introduction/register_prepare/
      */
     protected $appSecret;
@@ -41,8 +43,8 @@ class BaiduClient
     /**
      * 创建小程序实例
      *
-     * @param string $appKey
-     * @param string $appSecret
+     * @param string          $appKey
+     * @param string          $appSecret
      * @param ClientInterface $httpClient
      */
     public function __construct($appKey, $appSecret, ClientInterface $httpClient = null)
@@ -55,7 +57,7 @@ class BaiduClient
     public function session($code)
     {
         $request = $this->buildSessionRequest($code);
-        
+
         $response = $this->httpClient->send($request);
 
         $content = $this->parseSessionResponse($response);
@@ -67,18 +69,19 @@ class BaiduClient
      * 构建 getSessionKeyByCode 请求
      *
      * @param string $code
+     *
      * @return RequestInterface
      *
      * @see https://smartprogram.baidu.com/docs/develop/api/open_log/#Session-Key/
      */
     protected function buildSessionRequest($code)
     {
-        $uri = "https://openapi.baidu.com/nalogin/getSessionKeyByCode";
+        $uri = 'https://openapi.baidu.com/nalogin/getSessionKeyByCode';
 
         $data = [
-            'code' => $code,
+            'code'      => $code,
             'client_id' => $this->appKey,
-            'sk' => $this->appSecret,
+            'sk'        => $this->appSecret,
         ];
 
         $body = build_query($data);
@@ -90,6 +93,7 @@ class BaiduClient
      * 解析 getSessionKeyByCode 响应
      *
      * @param ResponseInterface $response
+     *
      * @return array
      */
     protected function parseSessionResponse(ResponseInterface $response)
@@ -108,16 +112,17 @@ class BaiduClient
     /**
      * 关键数据解密
      *
-     * @param string $cipherText    待解密数据，即小程序端接口返回的 `data` 字段
-     * @param string $iv            加密向量，即小程序端接口返回的 `iv` 字段
-     * @param string $sessionKey    登录时服务端使用 code 获取
-     * @return string
-     * 
-     * @see self::session()
-     * 
+     * @param string $cipherText 待解密数据，即小程序端接口返回的 `data` 字段
+     * @param string $iv         加密向量，即小程序端接口返回的 `iv` 字段
+     * @param string $sessionKey 登录时服务端使用 code 获取
+     *
      * @throws \InvalidArgumentException
      * @throws BaiduOpenSslException
      * @throws BaiduDecryptException
+     *
+     * @return string
+     *
+     * @see self::session()
      */
     public function decrypt($cipherText, $iv, $sessionKey)
     {
@@ -142,7 +147,7 @@ class BaiduClient
         // trim header
         $plainText = substr($plainText, 16);
         // get content length
-        $unpack = unpack("Nlen/", substr($plainText, 0, 4));
+        $unpack = unpack('Nlen/', substr($plainText, 0, 4));
         // get content
         $content = substr($plainText, 4, $unpack['len']);
         // get app_key
@@ -151,7 +156,7 @@ class BaiduClient
         if ($appKey !== $this->appKey) {
             throw new BaiduDecryptException('Invalid app key.');
         }
-    
+
         return $content;
     }
 }
