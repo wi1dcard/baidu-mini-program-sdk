@@ -2,23 +2,23 @@
 
 namespace BaiduMiniProgram\Payment;
 
-use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
 use BaiduMiniProgram\Exceptions\BaiduBase64Exception;
 use BaiduMiniProgram\Exceptions\BaiduInvalidSignException;
+use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
 
 class Signer
 {
     /**
      * 签名算法
      *
-     * @var integer
+     * @var int
      */
     protected $algo;
 
     /**
      * 创建签名器
      *
-     * @param integer $algo
+     * @param int $algo
      */
     public function __construct($algo = OPENSSL_ALGO_SHA256)
     {
