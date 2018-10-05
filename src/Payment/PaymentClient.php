@@ -225,7 +225,7 @@ class PaymentClient
      * @param array|null $params 请求参数（默认使用 $_POST）
      *
      * @return bool
-     * 
+     *
      * @see self::verifyOrFail()
      */
     public function verify($params = null)
@@ -245,8 +245,9 @@ class PaymentClient
      * 验证由百度服务器发来的回调通知请求签名，通常用于确保数据未被篡改；若签名错误则抛出异常
      *
      * @param array $params 请求参数（默认使用 $_POST）
+     *
      * @return array
-     * 
+     *
      * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/push_notice.md
      * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/refund_audit.md
      * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/success_refund.md
@@ -264,14 +265,15 @@ class PaymentClient
      * 构建成功响应，用于接收到回调通知请求时返回给百度服务器
      *
      * @param array|object $data
+     *
      * @return string
      */
     protected function buildSuccessfulResponse($data)
     {
         return json_encode([
             'errno' => 0,
-            'msg' => 'success',
-            'data' => $data,
+            'msg'   => 'success',
+            'data'  => $data,
         ]);
     }
 
@@ -279,14 +281,15 @@ class PaymentClient
      * 构建失败响应，用于接收到回调通知请求时返回给百度服务器
      *
      * @param \Exception $exception
+     *
      * @return string
      */
     protected function buildFailedResponse(\Exception $exception)
     {
         return json_encode([
             'errno' => $exception->getCode() ?: -1,
-            'msg' => 'failed',
-            'data' => [],
+            'msg'   => 'failed',
+            'data'  => [],
         ]);
     }
 
@@ -294,7 +297,8 @@ class PaymentClient
      * 处理回调通知过程中产生的异常
      *
      * @param \Exception $exception
-     * @param callable $handler
+     * @param callable   $handler
+     *
      * @return mixed
      */
     protected function handleNotificationException(\Exception $exception, $handler)
@@ -302,16 +306,18 @@ class PaymentClient
         if ($handler !== null) {
             try {
                 return call_user_func($handler, $exception);
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         }
     }
 
     /**
      * 处理回调通知请求，捕捉全部异常转换为百度服务器可识别的 JSON 响应，可直接输出此方法返回值
      *
-     * @param callable $handler 回调函数，成功验证签名后则会调用，应当在此回调内编写业务逻辑，若出现失败应当抛出异常，本方法将会捕捉并处理
+     * @param callable $handler      回调函数，成功验证签名后则会调用，应当在此回调内编写业务逻辑，若出现失败应当抛出异常，本方法将会捕捉并处理
      * @param callable $errorHandler 错误回调函数，若执行过程中发生任何错误则会调用，可用于记录日志等
-     * @param array $params 请求参数（默认使用 $_POST）
+     * @param array    $params       请求参数（默认使用 $_POST）
+     *
      * @return string
      */
     public function handleNotification($handler, $errorHandler = null, $params = null)
@@ -326,14 +332,15 @@ class PaymentClient
             }
 
             $this->verifyOrFail($params);
-    
+
             $result = call_user_func($handler, $params);
-    
+
             if (!is_array($result) && !is_object($result)) {
                 throw new \UnexpectedValueException('Invalid result type of callback.', -5);
             }
         } catch (\Exception $exception) {
             $this->handleNotificationException($exception, $errorHandler);
+
             return $this->buildFailedResponse($exception);
         }
 
