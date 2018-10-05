@@ -17,11 +17,6 @@ Baidu Smart Mini-Program SDK for PHP
 * **目录**
     * [主要目的](#主要目的)
     * [如何使用](#如何使用)
-        * [准备](#准备)
-        * [登录](#登录)
-        * [解密](#解密)
-        * [模版消息](#模版消息)
-        * [支付](#支付)
     * [其它资源](#其它资源)
     * [感想](#感想)
     * [协议](#协议)
@@ -32,10 +27,10 @@ Baidu Smart Mini-Program SDK for PHP
 
 本项目着眼于「小程序」，集成以下功能。
 
-1. 登录
-2. 解密
-3. 模板消息（又称「消息模板」）
-4. 支付（百度收银台）
+1. [登录](#登录)
+2. [解密](#解密)
+3. [模版消息](#模版消息)（又称「消息模板」）
+4. [支付](#支付)（百度收银台）
 
 ## 如何使用
 
@@ -126,6 +121,10 @@ TODO
 在研究小程序支付部分时，居然发现其 [签名过程](https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_2_base/sign_v2.md)、[SDK](https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_3_business/moneycourt/settle.md) 等几乎与 [支付宝开放平台 SDK](https://docs.open.alipay.com/54/103419/) 一模一样。但从修改日期来看，支付宝是 2014 年，百度是 2016 年，且百度的代码相对规范些。
 
 难不成... 是大佬被挖走了？
+
+最后，欢迎关注我们的产品：
+
+[<img src="https://i.loli.net/2018/07/24/5b56dda76b2ba.png" width="30%" height="30%">](http://www.zjhejiang.com/)
 
 ## 协议
 
