@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
+use BaiduMiniProgram\Exceptions\BaiduInvalidSignException;
 
 class PaymentClient
 {
@@ -215,7 +216,7 @@ class PaymentClient
             'tpOrderId' => $tpOrderId,
         ];
 
-        return $this->signer->generateByParams($params);
+        return $this->signer->generateByParams($params, $this->privateKey);
     }
 
     /**
@@ -237,7 +238,7 @@ class PaymentClient
 
         try {
             $this->signer->verifyByParams($params, $this->publicKey);
-        } catch (AlipayInvalidSignException $ex) {
+        } catch (BaiduInvalidSignException $ex) {
             return false;
         } catch (\InvalidArgumentException $ex) {
             return false;
