@@ -103,7 +103,7 @@ class Signer
      * @param array    $params
      * @param resource $publicKey
      *
-     * @return void
+     * @return array
      *
      * @see self::verify()
      */
@@ -118,6 +118,8 @@ class Signer
 
         $data = $this->convertSignData($params);
         $this->verify($sign, $data, $publicKey);
+
+        return $params;
     }
 
     /**
