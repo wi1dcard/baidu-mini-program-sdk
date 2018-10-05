@@ -2,12 +2,12 @@
 
 namespace BaiduMiniProgram\Payment;
 
+use BaiduMiniProgram\Exceptions\BaiduInvalidSignException;
 use BaiduMiniProgram\ParseResponseTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
-use BaiduMiniProgram\Exceptions\BaiduInvalidSignException;
 
 class PaymentClient
 {
