@@ -5,7 +5,8 @@
     "require": {
         "php": ">=5.4",
         "ext-openssl": "*",
-        "guzzlehttp/guzzle": "^5.0|^6.0"
+        "guzzlehttp/guzzle": "^5.0|^6.0",
+        "guzzlehttp/psr7": "^1.3"
     },
     "require-dev": {
         "phpunit/phpunit": ">=4.8"
