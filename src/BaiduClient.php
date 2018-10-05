@@ -52,7 +52,7 @@ class BaiduClient
      * 服务端发起 OAuth 请求，获取 Access Token，可用于发送模板消息等
      *
      * @return array
-     * 
+     *
      * @see https://smartprogram.baidu.com/docs/develop/server/power_exp/
      */
     public function oauth()
