@@ -45,6 +45,7 @@ trait ParseResponseTrait
         if (isset($data[$field]) && $data[$field] != 0) {
             $message = isset($data[$messageField]) ? $data[$messageField] : 'Bad response.';
             $code = intval($data[$field]);
+
             throw new BaiduResponseException($message, $code);
         }
     }
@@ -53,8 +54,8 @@ trait ParseResponseTrait
      * 解析接口响应
      *
      * @param ResponseInterface $response
-     * @param string|null            $field
-     * @param string|null            $messageField
+     * @param string|null       $field
+     * @param string|null       $messageField
      *
      * @return array
      */

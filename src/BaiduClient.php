@@ -52,7 +52,7 @@ class BaiduClient
      * 服务端发起 OAuth 请求，获取 Access Token，可用于发送模板消息等
      *
      * @return void
-     * 
+     *
      * @see https://smartprogram.baidu.com/docs/develop/server/power_exp/
      */
     public function oauth()
@@ -76,9 +76,9 @@ class BaiduClient
         $uri = 'https://openapi.baidu.com/oauth/2.0/token';
 
         $data = [
-            'grant_type' => 'client_credentials',
-            'scope' => 'smartapp_snsapi_base',
-            'client_id' => $this->appKey,
+            'grant_type'    => 'client_credentials',
+            'scope'         => 'smartapp_snsapi_base',
+            'client_id'     => $this->appKey,
             'client_secret' => $this->appSecret,
         ];
 
