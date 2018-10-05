@@ -225,7 +225,7 @@ class PaymentClient
      * @param array|null $params 请求参数（默认使用 $_POST）
      *
      * @return bool
-     * 
+     *
      * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/push_notice.md
      * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/refund_audit.md
      * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/success_refund.md
