@@ -63,7 +63,7 @@ class BaiduClient
 
         $response = $this->httpClient->send($request);
 
-        $content = $this->parseResponse($response, 'error', 'error_description');
+        $content = $this->parseResponse($response, 'errno', 'error_description');
 
         return $content;
     }
