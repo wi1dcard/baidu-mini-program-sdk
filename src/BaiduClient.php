@@ -76,9 +76,9 @@ class BaiduClient
         $uri = 'https://openapi.baidu.com/oauth/2.0/token';
 
         $data = [
-            'grant_type' => 'client_credentials',
-            'scope' => 'smartapp_snsapi_base',
-            'client_id' => $this->appKey,
+            'grant_type'    => 'client_credentials',
+            'scope'         => 'smartapp_snsapi_base',
+            'client_id'     => $this->appKey,
             'client_secret' => $this->appSecret,
         ];
 
