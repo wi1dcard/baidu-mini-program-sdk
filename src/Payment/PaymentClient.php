@@ -2,12 +2,10 @@
 
 namespace BaiduMiniProgram\Payment;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use Psr\Http\Message\ResponseInterface;
-use BaiduMiniProgram\Exceptions\BaiduResponseException;
 use BaiduMiniProgram\ParseResponseTrait;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 
 class PaymentClient
@@ -59,12 +57,12 @@ class PaymentClient
     /**
      * 创建支付客户端
      *
-     * @param string $dealId 百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
-     * @param string $appKey 百度收银台 App Key，此值并非智能小程序平台分配，请不要混淆 {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
-     * @param mixed $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径  {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
-     * @param mixed $publicKey PEM 格式的平台公钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-public.php}
+     * @param string          $dealId     百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
+     * @param string          $appKey     百度收银台 App Key，此值并非智能小程序平台分配，请不要混淆 {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
+     * @param mixed           $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径  {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
+     * @param mixed           $publicKey  PEM 格式的平台公钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-public.php}
      * @param ClientInterface $httpClient HTTP 客户端，用于发送请求
-     * @param Signer $signer 签名器，用于生成签名、验证签名
+     * @param Signer          $signer     签名器，用于生成签名、验证签名
      */
     public function __construct(
         $dealId,
@@ -96,9 +94,9 @@ class PaymentClient
     /**
      * 获取私钥
      *
-     * @return resource
-     * 
      * @throws \LogicException 密钥无效或未初始化时抛出
+     *
+     * @return resource
      */
     public function getPrivateKey()
     {
@@ -112,9 +110,9 @@ class PaymentClient
     /**
      * 获取公钥
      *
-     * @return resource
-     * 
      * @throws \LogicException 密钥无效或未初始化时抛出
+     *
+     * @return resource
      */
     public function getPublicKey()
     {
@@ -128,8 +126,9 @@ class PaymentClient
     /**
      * 订单状态查询接口
      *
-     * @param string $orderId
-     * @param string|integer $userId
+     * @param string     $orderId
+     * @param string|int $userId
+     *
      * @return mixed
      */
     public function orderDetail($orderId, $userId)
@@ -144,10 +143,10 @@ class PaymentClient
     protected function buildOrderDetailRequest($orderId, $userId)
     {
         $data = [
-            'dealId' => $this->dealId,
-            'appKey' => $this->appKey,
+            'dealId'  => $this->dealId,
+            'appKey'  => $this->appKey,
             'orderId' => $orderId,
-            'siteId' => $userId,
+            'siteId'  => $userId,
         ];
 
         $data['sign'] = $this->signer->generateByParams($data, $this->getPrivateKey());
@@ -163,11 +162,12 @@ class PaymentClient
     /**
      * 申请退款接口
      *
-     * @param string $orderId
-     * @param string|integer $userId
-     * @param string|integer $tpOrderId
-     * @param integer $refundType
-     * @param string $refundReason
+     * @param string     $orderId
+     * @param string|int $userId
+     * @param string|int $tpOrderId
+     * @param int        $refundType
+     * @param string     $refundReason
+     *
      * @return mixed
      */
     public function orderRefund($orderId, $userId, $tpOrderId, $refundType = 1, $refundReason = '')
@@ -184,13 +184,13 @@ class PaymentClient
         $uri = 'https://nop.nuomi.com/nop/server/rest';
 
         $data = [
-            'method' => 'nuomi.cashier.applyorderrefund',
-            'orderId' => $orderId,
-            'userId' => $userId,
-            'refundType' => $refundType,
+            'method'       => 'nuomi.cashier.applyorderrefund',
+            'orderId'      => $orderId,
+            'userId'       => $userId,
+            'refundType'   => $refundType,
             'refundReason' => $refundType,
-            'tpOrderId' => $tpOrderId,
-            'appKey' => $this->appKey,
+            'tpOrderId'    => $tpOrderId,
+            'appKey'       => $this->appKey,
         ];
 
         $data['rsaSign'] = $this->signer->generateByParams($data, $this->getPrivateKey());

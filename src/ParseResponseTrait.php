@@ -2,8 +2,8 @@
 
 namespace BaiduMiniProgram;
 
-use Psr\Http\Message\ResponseInterface;
 use BaiduMiniProgram\Exceptions\BaiduResponseException;
+use Psr\Http\Message\ResponseInterface;
 
 trait ParseResponseTrait
 {
@@ -11,6 +11,7 @@ trait ParseResponseTrait
      * 从响应中提取响应体完整字符串
      *
      * @param ResponseInterface $response
+     *
      * @return string
      */
     protected function getContentFromResponse(ResponseInterface $response)
@@ -22,6 +23,7 @@ trait ParseResponseTrait
      * 解析 JSON
      *
      * @param string $json
+     *
      * @return mixed
      */
     protected function decodeJsonResponse($json)
@@ -32,9 +34,10 @@ trait ParseResponseTrait
     /**
      * 检查响应结果是否正常
      *
-     * @param mixed $data
+     * @param mixed  $data
      * @param string $field
      * @param string $messageField
+     *
      * @return void
      */
     protected function determineResponseResult($data, $field, $messageField)
@@ -48,8 +51,8 @@ trait ParseResponseTrait
      * 解析接口响应
      *
      * @param ResponseInterface $response
-     * @param string $field
-     * @param string $messageField
+     * @param string            $field
+     * @param string            $messageField
      *
      * @return array
      */
