@@ -49,7 +49,46 @@ class BaiduClient
     }
 
     /**
-     * 小程序用户登录，使用 Code 换取 SessionKey 等
+     * 服务端发起 OAuth 请求，获取 Access Token，可用于发送模板消息等
+     *
+     * @return void
+     * 
+     * @see https://smartprogram.baidu.com/docs/develop/server/power_exp/
+     */
+    public function oauth()
+    {
+        $request = $this->buildOauthRequest();
+
+        $response = $this->httpClient->send($request);
+
+        $content = $this->parseResponse($response);
+
+        return $content;
+    }
+
+    /**
+     * 构建 OAuth 请求
+     *
+     * @return RequestInterface
+     */
+    protected function buildOauthRequest()
+    {
+        $uri = 'https://openapi.baidu.com/oauth/2.0/token';
+
+        $data = [
+            'grant_type' => 'client_credentials',
+            'scope' => 'smartapp_snsapi_base',
+            'client_id' => $this->appKey,
+            'client_secret' => $this->appSecret,
+        ];
+
+        $body = \GuzzleHttp\Psr7\build_query($data);
+
+        return new Request('POST', $uri, [], $body);
+    }
+
+    /**
+     * 小程序用户登录，使用 Code 换取 SessionKey，可用于解密关键数据等
      *
      * @param string $code
      *
