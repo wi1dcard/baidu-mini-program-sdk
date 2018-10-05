@@ -204,13 +204,14 @@ class PaymentClient
      * 为小程序端发起订单的 `swan.requestPolymerPayment` 接口生成签名
      *
      * @param string|int $tpOrderId
+     *
      * @return string
      */
     public function signForPolymerPayment($tpOrderId)
     {
         $params = [
-            'appKey' => $this->appKey,
-            'dealId' => $this->dealId,
+            'appKey'    => $this->appKey,
+            'dealId'    => $this->dealId,
             'tpOrderId' => $tpOrderId,
         ];
 
