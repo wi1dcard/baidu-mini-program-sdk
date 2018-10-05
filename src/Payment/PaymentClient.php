@@ -15,7 +15,7 @@ class PaymentClient
     /**
      * Deal ID
      *
-     * @var string
+     * @var string|int
      */
     protected $dealId;
 
@@ -57,7 +57,7 @@ class PaymentClient
     /**
      * 创建支付客户端
      *
-     * @param string          $dealId     百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
+     * @param string|int      $dealId     百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
      * @param string          $appKey     百度收银台 App Key，此值并非智能小程序平台分配，请不要混淆 {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
      * @param mixed           $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径  {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
      * @param mixed           $publicKey  PEM 格式的平台公钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-public.php}
@@ -198,5 +198,22 @@ class PaymentClient
         $body = \GuzzleHttp\Psr7\build_query($data);
 
         return new Request('POST', $uri, [], $body);
+    }
+
+    /**
+     * 为小程序端发起订单的 `swan.requestPolymerPayment` 接口生成签名
+     *
+     * @param string|int $tpOrderId
+     * @return string
+     */
+    public function signForPolymerPayment($tpOrderId)
+    {
+        $params = [
+            'appKey' => $this->appKey,
+            'dealId' => $this->dealId,
+            'tpOrderId' => $tpOrderId,
+        ];
+
+        return $this->signer->generateByParams($params);
     }
 }
