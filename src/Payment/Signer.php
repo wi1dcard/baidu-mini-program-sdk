@@ -109,6 +109,10 @@ class Signer
      */
     public function verifyByParams($params, $publicKey)
     {
+        if (!isset($params['rsaSign'])) {
+            throw new \InvalidArgumentException('Missing signature.');
+        }
+
         $sign = $params['rsaSign'];
         unset($params['rsaSign']);
 
