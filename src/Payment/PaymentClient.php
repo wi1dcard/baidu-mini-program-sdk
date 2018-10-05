@@ -216,4 +216,32 @@ class PaymentClient
 
         return $this->signer->generateByParams($params);
     }
+
+    /**
+     * 验证由百度服务器发来的回调通知请求，其签名数据是否未被篡改
+     *
+     * @param array|null $params 请求参数（默认使用 $_POST）
+     *
+     * @return bool
+     * 
+     * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/push_notice.md
+     * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/refund_audit.md
+     * @see https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/standard_interface/success_refund.md
+     */
+    public function verify($params = null)
+    {
+        if ($params === null) {
+            $params = $_POST;
+        }
+
+        try {
+            $this->signer->verifyByParams($params, $this->publicKey);
+        } catch (AlipayInvalidSignException $ex) {
+            return false;
+        } catch (\InvalidArgumentException $ex) {
+            return false;
+        }
+
+        return true;
+    }
 }
