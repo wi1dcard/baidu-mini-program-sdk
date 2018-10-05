@@ -138,6 +138,14 @@ class BaiduClient
         return $content;
     }
 
+    /**
+     * 使用 Base64 解码参与解密的参数，可重载此方法实现自定义解码
+     *
+     * @param mixed $cipherText
+     * @param mixed $iv
+     * @param mixed $sessionKey
+     * @return array
+     */
     protected function decodeForDecrypting($cipherText, $iv, $sessionKey)
     {
         $cipherText = base64_decode($cipherText);
