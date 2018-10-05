@@ -54,6 +54,15 @@ class BaiduClient
         $this->httpClient = $httpClient ?: new Client();
     }
 
+    /**
+     * 小程序用户登录，使用 Code 换取 SessionKey 等
+     *
+     * @param string $code
+     * 
+     * @return mixed
+     * 
+     * @see https://smartprogram.baidu.com/docs/develop/api/open_log/#Session-Key/
+     */
     public function session($code)
     {
         $request = $this->buildSessionRequest($code);
@@ -71,8 +80,6 @@ class BaiduClient
      * @param string $code
      *
      * @return RequestInterface
-     *
-     * @see https://smartprogram.baidu.com/docs/develop/api/open_log/#Session-Key/
      */
     protected function buildSessionRequest($code)
     {
@@ -94,7 +101,7 @@ class BaiduClient
      *
      * @param string $cipherText 待解密数据，即小程序端接口返回的 `data` 字段
      * @param string $iv         加密向量，即小程序端接口返回的 `iv` 字段
-     * @param string $sessionKey 登录时服务端使用 code 获取
+     * @param string $sessionKey 密钥，登录时服务端使用 Code 换取
      *
      * @throws \InvalidArgumentException
      * @throws BaiduOpenSslException
