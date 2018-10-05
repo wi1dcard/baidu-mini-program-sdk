@@ -13,6 +13,8 @@ use Psr\Http\Message\ResponseInterface;
 
 class BaiduClient
 {
+    use ParseResponseTrait;
+
     /**
      * 小程序 App Key
      *
@@ -58,7 +60,7 @@ class BaiduClient
 
         $response = $this->httpClient->send($request);
 
-        $content = $this->parseSessionResponse($response);
+        $content = $this->parseResponse($response, 'error', 'error_description');
 
         return $content;
     }
@@ -85,26 +87,6 @@ class BaiduClient
         $body = \GuzzleHttp\Psr7\build_query($data);
 
         return new Request('POST', $uri, [], $body);
-    }
-
-    /**
-     * 解析 getSessionKeyByCode 响应
-     *
-     * @param ResponseInterface $response
-     *
-     * @return array
-     */
-    protected function parseSessionResponse(ResponseInterface $response)
-    {
-        $content = $response->getBody()->getContents();
-
-        $parsed = \GuzzleHttp\json_decode($content, true);
-
-        if (isset($parsed['error'])) {
-            throw new BaiduResponseException($parsed['error_description']);
-        }
-
-        return $parsed;
     }
 
     /**
