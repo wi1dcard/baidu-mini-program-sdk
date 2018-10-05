@@ -16,20 +16,16 @@ class BaiduClient
     use ParseResponseTrait;
 
     /**
-     * 小程序 App Key
+     * App Key
      *
      * @var string
-     *
-     * @see https://smartprogram.baidu.com/docs/introduction/register_prepare/
      */
     protected $appKey;
 
     /**
-     * 小程序 App Secret
+     * App Secret
      *
      * @var string
-     *
-     * @see https://smartprogram.baidu.com/docs/introduction/register_prepare/
      */
     protected $appSecret;
 
@@ -43,9 +39,9 @@ class BaiduClient
     /**
      * 创建小程序实例
      *
-     * @param string          $appKey
-     * @param string          $appSecret
-     * @param ClientInterface $httpClient
+     * @param string          $appKey 小程序 App Key，又称 Client ID，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
+     * @param string          $appSecret 小程序 App Secret，又称 Client Secret，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
+     * @param ClientInterface $httpClient HTTP 客户端，用于发送请求
      */
     public function __construct($appKey, $appSecret, ClientInterface $httpClient = null)
     {
