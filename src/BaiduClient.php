@@ -110,13 +110,7 @@ class BaiduClient
      */
     public function decrypt($cipherText, $iv, $sessionKey)
     {
-        $sessionKey = base64_decode($sessionKey);
-        $iv = base64_decode($iv);
-        $cipherText = base64_decode($cipherText);
-
-        if (!$sessionKey || !$iv || !$cipherText) {
-            throw new \InvalidArgumentException('Base64 decoding error.');
-        }
+        list($cipherText, $iv, $sessionKey) = $this->decodeForDecrypting($cipherText, $iv, $sessionKey);
 
         $plainText = openssl_decrypt($cipherText, 'AES-192-CBC', $sessionKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $iv);
         if ($plainText === false) {
@@ -142,5 +136,18 @@ class BaiduClient
         }
 
         return $content;
+    }
+
+    protected function decodeForDecrypting($cipherText, $iv, $sessionKey)
+    {
+        $cipherText = base64_decode($cipherText);
+        $iv = base64_decode($iv);
+        $sessionKey = base64_decode($sessionKey);
+
+        if (!$sessionKey || !$iv || !$cipherText) {
+            throw new \InvalidArgumentException('Bad base64 decode.');
+        }
+
+        return [$cipherText, $iv, $sessionKey];
     }
 }
