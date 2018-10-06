@@ -8,11 +8,10 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
+use BaiduMiniProgram\Client\BaiduAbstractClient;
 
-class PaymentClient
+class PaymentClient extends BaiduAbstractClient
 {
-    use ParseResponseTrait;
-
     /**
      * Deal ID
      *
@@ -49,38 +48,31 @@ class PaymentClient
     protected $signer;
 
     /**
-     * HTTP 客户端
-     *
-     * @var HttpClient
-     */
-    protected $httpClient;
-
-    /**
      * 创建支付客户端
      *
      * @param string|int $dealId     百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
      * @param string     $appKey     百度收银台 App Key，此值并非智能小程序平台分配，请不要混淆 {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
      * @param mixed      $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
      * @param mixed      $publicKey  PEM 格式的平台公钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-public.php}
-     * @param HttpClient $httpClient HTTP 客户端，用于发送请求
      * @param Signer     $signer     签名器，用于生成签名、验证签名
+     * @param HttpClient $httpClient HTTP 客户端，用于发送请求
      */
     public function __construct(
         $dealId,
         $appKey,
         $privateKey = null,
         $publicKey = null,
-        HttpClient $httpClient = null,
-        Signer $signer = null
+        Signer $signer = null,
+        HttpClient $httpClient = null
     ) {
         $this->dealId = $dealId;
         $this->appKey = $appKey;
 
         $this->privateKey = openssl_pkey_get_private($privateKey);
         $this->publicKey = openssl_pkey_get_public($publicKey);
-
-        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
         $this->signer = $signer ?: new Signer();
+
+        parent::__construct($httpClient);
     }
 
     /**

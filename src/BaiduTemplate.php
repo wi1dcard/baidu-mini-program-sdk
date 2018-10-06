@@ -7,20 +7,12 @@ use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
+use BaiduMiniProgram\Client\BaiduAbstractClient;
 
-class BaiduTemplate
+class BaiduTemplate extends BaiduAbstractClient
 {
-    use ParseResponseTrait;
-
     const RESPONSE_FIELD = 'errno';
     const RESPONSE_MESSAGE_FIELD = 'msg';
-
-    /**
-     * HTTP 客户端
-     *
-     * @var HttpClient
-     */
-    protected $httpClient;
 
     /**
      * 接口 URI
@@ -38,7 +30,8 @@ class BaiduTemplate
     public function __construct($accessToken, HttpClient $httpClient = null)
     {
         $this->gateway = "https://openapi.baidu.com/rest/2.0/smartapp/template/librarylist?access_token={$accessToken}";
-        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
+
+        parent::__construct($httpClient);
     }
 
     protected function buildRequest($params)

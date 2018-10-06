@@ -3,7 +3,6 @@
 use PHPUnit\Framework\TestCase;
 use BaiduMiniProgram\BaiduClient;
 use BaiduMiniProgram\BaiduTemplate;
-use Http\Adapter\Guzzle5\Client;
 
 class ClientTest extends TestCase
 {
@@ -13,7 +12,7 @@ class ClientTest extends TestCase
             $appSecret = getenv('APP_SECRET')
         );
 
-        return new BaiduClient('BNQfGXeHyAt83x0qmoK6hvOEdYwCjfeg', $appSecret, new Client());
+        return new BaiduClient('BNQfGXeHyAt83x0qmoK6hvOEdYwCjfeg', $appSecret);
     }
 
     public function testDecrypt()

@@ -1,6 +1,6 @@
 <?php
 
-namespace BaiduMiniProgram;
+namespace BaiduMiniProgram\Client;
 
 use BaiduMiniProgram\Exceptions\BaiduResponseException;
 use Psr\Http\Message\ResponseInterface;

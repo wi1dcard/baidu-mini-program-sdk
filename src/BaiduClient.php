@@ -8,11 +8,10 @@ use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Psr\Http\Message\RequestInterface;
+use BaiduMiniProgram\Client\BaiduAbstractClient;
 
-class BaiduClient
+class BaiduClient extends BaiduAbstractClient
 {
-    use ParseResponseTrait;
-
     /**
      * App Key
      *
@@ -28,13 +27,6 @@ class BaiduClient
     protected $appSecret;
 
     /**
-     * HTTP 客户端
-     *
-     * @var HttpClient
-     */
-    protected $httpClient;
-
-    /**
      * 创建小程序实例
      *
      * @param string     $appKey     小程序 App Key，又称 Client ID，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
@@ -45,7 +37,7 @@ class BaiduClient
     {
         $this->appKey = $appKey;
         $this->appSecret = $appSecret;
-        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
+        parent::__construct($httpClient);
     }
 
     /**
