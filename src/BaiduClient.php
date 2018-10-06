@@ -126,7 +126,7 @@ class BaiduClient
 
         $body = \GuzzleHttp\Psr7\build_query($data);
 
-        return new \GuzzleHttp\Psr7\Request('POST', $uri, [], $body);
+        return new Request('POST', $uri, [], $body);
     }
 
     /**
@@ -195,5 +195,17 @@ class BaiduClient
         }
 
         return [$cipherText, $iv, $sessionKey];
+    }
+
+    /**
+     * 获取 BaiduTemplate 对象
+     *
+     * @return BaiduTemplate
+     */
+    public function template()
+    {
+        $credential = $this->oauth();
+
+        return new BaiduTemplate($credential['access_token'], $this->httpClient);
     }
 }
