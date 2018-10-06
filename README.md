@@ -3,7 +3,7 @@ Baidu Smart Mini-Program SDK for PHP
 
 <img src="https://smartprogram.baidu.com/docs/img/logo.png" height="30px">
 
-🐾 百度小程序第三方 PHP SDK，助力智能小程序开发。
+🐾 百度小程序第三方 PHP SDK，遵循 PSR-7、支持 PHP 5.4，助力智能小程序开发。
 
 [![Build Status](https://travis-ci.org/wi1dcard/baidu-mini-program-sdk.svg?branch=master)](https://travis-ci.org/wi1dcard/baidu-mini-program-sdk)
 [![Coverage Status](https://coveralls.io/repos/github/wi1dcard/baidu-mini-program-sdk/badge.svg)](https://coveralls.io/github/wi1dcard/baidu-mini-program-sdk)
@@ -31,6 +31,7 @@ Baidu Smart Mini-Program SDK for PHP
 2. [解密](#解密)
 3. [模版消息](#模版消息)（又称「消息模板」）
 4. [支付](#支付)（百度收银台）
+5. [深入](#深入)
 
 ## 如何使用
 
@@ -109,6 +110,41 @@ TODO
 
 1. 按照 [官方文档](https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/access_process.md) 说明，入驻平台、创建服务等。
 2. TODO
+
+### 深入
+
+本 SDK 遵循「[PSR-7 HTTP Message](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md)」、HTTP 客户端基于「[HTTPlug](https://github.com/php-http/httplug)」,因此你可以任意定制 HTTP 客户端，只要兼容 PSR-7 即可。
+
+通常情况下，本 SDK 使用内置的 [`BaiduHttpClient`](src/Client/BaiduHttpClient.php) 为默认 HTTP 客户端，此客户端使用 CURL 驱动，代码摘自 [php-http/curl-client](https://github.com/php-http/curl-client/blob/master/src/Client.php)，经过修改后支持 PHP 5.4。
+
+当然，你可以替换成自己喜欢的客户端，查看受支持的 [客户端列表](https://packagist.org/providers/php-http/client-implementation)。
+
+例如替换为 Guzzle 6。
+
+```bash
+composer require guzzlehttp/guzzle:^6.0 # 安装 Guzzle，若已安装可跳过
+composer require php-http/discovery # 此扩展包用于自动发现可用的 HTTP 客户端
+composer require php-http/guzzle6-adapter # 安装适配器，适配 Guzzle + HTTPlug
+```
+
+或者，你也可以自行编写一个实现 [`Http\Client\HttpClient`](https://github.com/php-http/httplug/blob/master/src/HttpClient.php) 接口的客户端，然后在类构造函数内传入即可。
+
+例如替换为 `YourHttpClient`。
+
+```php
+class YourHttpClient implements Http\Client\HttpClient
+{
+    public function sendRequest(Psr\Http\Message\RequestInterface $request) : Psr\Http\Message\ResponseInterface
+    {
+        // 发送兼容 PSR-7 RequestInterface 的请求
+        // 返回兼容 PSR-7 ResponseInterface 的响应
+    }
+}
+
+$app = new BaiduClient('App Key', 'App Secret', new YourHttpClient());
+
+// 接下来，当调用 $app 内的方法、需要发送 HTTP 请求时，均会通过 YourHttpClient::sendRequest。
+```
 
 ## 其它资源
 
