@@ -7,6 +7,7 @@ use BaiduMiniProgram\ParseResponseTrait;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Client\HttpClient;
 use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7\Request;
 
 class PaymentClient
 {
@@ -156,7 +157,7 @@ class PaymentClient
         $uri = (new Uri('https://dianshang.baidu.com/platform/entity/openapi/queryorderdetail'))
             ->withQuery($query);
 
-        return new \GuzzleHttp\Psr7\Request('GET', $uri);
+        return new Request('GET', $uri);
     }
 
     /**
@@ -197,7 +198,7 @@ class PaymentClient
 
         $body = \GuzzleHttp\Psr7\build_query($data);
 
-        return new \GuzzleHttp\Psr7\Request('POST', $uri, [], $body);
+        return new Request('POST', $uri, [], $body);
     }
 
     /**

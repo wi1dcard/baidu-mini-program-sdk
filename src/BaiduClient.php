@@ -7,6 +7,7 @@ use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
 use Psr\Http\Message\RequestInterface;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
+use GuzzleHttp\Psr7\Request;
 
 class BaiduClient
 {
@@ -83,7 +84,7 @@ class BaiduClient
 
         $body = \GuzzleHttp\Psr7\build_query($data);
 
-        return new \GuzzleHttp\Psr7\Request('POST', $uri, [], $body);
+        return new Request('POST', $uri, [], $body);
     }
 
     /**
