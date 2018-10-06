@@ -3,6 +3,7 @@ language: php
 matrix:
   include:
     - php: 5.4
+      env: PHP54=true
     - php: 5.5
     - php: 5.6
     - php: 7.0
@@ -12,6 +13,10 @@ matrix:
 
 install:
   - composer update --prefer-dist
+  - |
+    if [[ $PHP54 != "" ]]; then
+      composer require --dev puli/composer-plugin
+    fi
 
 script:
   - vendor/bin/phpunit
