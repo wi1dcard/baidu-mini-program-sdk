@@ -33,6 +33,7 @@ abstract class BaiduAbstractClient
             try {
                 $client = \Http\Discovery\HttpClientDiscovery::find();
             } catch (\Http\Discovery\NotFoundException $ex) {
+            } catch (\RuntimeException $ex) {
             }
         }
 
