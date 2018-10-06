@@ -115,6 +115,8 @@ TODO
 
 本 SDK 遵循「[PSR-7 HTTP Message](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md)」、HTTP 客户端基于「[HTTPlug](https://github.com/php-http/httplug)」,因此你可以任意定制 HTTP 客户端，只要兼容 PSR-7 即可。
 
+[有什么好处？](https://wi1dcard.cn/documents/psr7-and-httplug/)
+
 通常情况下，本 SDK 使用内置的 [`BaiduHttpClient`](src/Client/BaiduHttpClient.php) 为默认 HTTP 客户端，此客户端使用 CURL 驱动，代码摘自 [php-http/curl-client](https://github.com/php-http/curl-client/blob/master/src/Client.php)，经过修改后支持 PHP 5.4。
 
 当然，你可以替换成自己喜欢的客户端，查看受支持的 [客户端列表](https://packagist.org/providers/php-http/client-implementation)。
