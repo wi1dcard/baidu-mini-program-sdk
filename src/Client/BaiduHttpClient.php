@@ -85,7 +85,12 @@ class BaiduHttpClient implements HttpClient
         $options = $this->createCurlOptions($request, $responseBuilder);
 
         if (is_resource($this->handle)) {
-            curl_reset($this->handle);
+            if (function_exists('curl_reset')) {
+                curl_reset($this->handle);
+            } else {
+                curl_close($this->handle);
+                $this->handle = curl_init();
+            }
         } else {
             $this->handle = curl_init();
         }
