@@ -2,20 +2,15 @@
 
 namespace BaiduMiniProgram\Client;
 
-use Http\Client\HttpClient;
-use GuzzleHttp\Psr7\Response;
 use Http\Client\Exception;
-use Http\Client\HttpAsyncClient;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Discovery\StreamFactoryDiscovery;
+use Http\Client\HttpClient;
+use Http\Message\Builder\ResponseBuilder;
 use Http\Message\MessageFactory;
+use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Http\Message\StreamFactory;
-use Http\Promise\Promise;
+use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
-use Http\Message\Builder\ResponseBuilder;
-use Http\Message\StreamFactory\GuzzleStreamFactory;
 
 /**
  * @link https://github.com/php-http/curl-client/blob/master/src/Client.php
@@ -77,12 +72,12 @@ class BaiduHttpClient implements HttpClient
      *
      * @param RequestInterface $request
      *
-     * @return ResponseInterface
-     *
      * @throws \Http\Client\Exception\NetworkException In case of network problems
      * @throws \Http\Client\Exception\RequestException On invalid request
      * @throws \InvalidArgumentException               For invalid header names or values
      * @throws \RuntimeException                       If creating the body stream fails
+     *
+     * @return ResponseInterface
      */
     public function sendRequest(RequestInterface $request)
     {
@@ -195,6 +190,7 @@ class BaiduHttpClient implements HttpClient
                 if (defined('CURL_HTTP_VERSION_2_0')) {
                     return CURL_HTTP_VERSION_2_0;
                 }
+
                 throw new \UnexpectedValueException('libcurl 7.33 needed for HTTP 2.0 support');
         }
 
@@ -298,9 +294,9 @@ class BaiduHttpClient implements HttpClient
     /**
      * Create new ResponseBuilder instance.
      *
-     * @return ResponseBuilder
-     *
      * @throws \RuntimeException If creating the stream from $body fails
+     *
+     * @return ResponseBuilder
      */
     private function createResponseBuilder()
     {

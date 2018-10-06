@@ -2,13 +2,11 @@
 
 namespace BaiduMiniProgram\Payment;
 
+use BaiduMiniProgram\Client\BaiduAbstractClient;
 use BaiduMiniProgram\Exceptions\BaiduInvalidSignException;
-use BaiduMiniProgram\ParseResponseTrait;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Http\Client\HttpClient;
-use Http\Discovery\HttpClientDiscovery;
-use BaiduMiniProgram\Client\BaiduAbstractClient;
 
 class PaymentClient extends BaiduAbstractClient
 {

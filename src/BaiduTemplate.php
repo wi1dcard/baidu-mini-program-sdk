@@ -2,12 +2,11 @@
 
 namespace BaiduMiniProgram;
 
+use BaiduMiniProgram\Client\BaiduAbstractClient;
 use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
-use Http\Discovery\HttpClientDiscovery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
-use BaiduMiniProgram\Client\BaiduAbstractClient;
 
 class BaiduTemplate extends BaiduAbstractClient
 {

@@ -32,7 +32,8 @@ abstract class BaiduAbstractClient
         if (class_exists('Http\Discovery\HttpClientDiscovery')) {
             try {
                 $client = \Http\Discovery\HttpClientDiscovery::find();
-            } catch (\Http\Discovery\NotFoundException $ex) {}
+            } catch (\Http\Discovery\NotFoundException $ex) {
+            }
         }
 
         if ($client === null) {
@@ -40,5 +41,5 @@ abstract class BaiduAbstractClient
         }
 
         return $client;
-    } 
+    }
 }

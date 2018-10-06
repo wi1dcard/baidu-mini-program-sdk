@@ -2,13 +2,12 @@
 
 namespace BaiduMiniProgram;
 
+use BaiduMiniProgram\Client\BaiduAbstractClient;
 use BaiduMiniProgram\Exceptions\BaiduDecryptException;
 use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
 use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
-use Http\Discovery\HttpClientDiscovery;
 use Psr\Http\Message\RequestInterface;
-use BaiduMiniProgram\Client\BaiduAbstractClient;
 
 class BaiduClient extends BaiduAbstractClient
 {
