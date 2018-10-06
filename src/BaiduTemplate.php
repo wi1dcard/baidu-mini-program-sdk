@@ -38,8 +38,9 @@ class BaiduTemplate extends BaiduAbstractClient
     /**
      * 构建消息模板的请求
      *
-     * @param array $params
+     * @param array  $params
      * @param string $action
+     *
      * @return RequestInterface
      */
     protected function buildRequest($params, $action)
@@ -53,6 +54,7 @@ class BaiduTemplate extends BaiduAbstractClient
      * 解析消息模板请求的响应
      *
      * @param ResponseInterface $response
+     *
      * @return array
      */
     protected function parseTemplateResponse(ResponseInterface $response)
@@ -66,6 +68,7 @@ class BaiduTemplate extends BaiduAbstractClient
      * 发送请求并解析响应
      *
      * @param RequestInterface $request
+     *
      * @return array
      */
     protected function sendRequestThenParse($request)
@@ -88,10 +91,11 @@ class BaiduTemplate extends BaiduAbstractClient
     /**
      * 获取小程序模板库标题列表
      *
-     * @param string|integer $offset 偏移数量
-     * @param string|integer $count 返回数量，取值区间 (0,20]
+     * @param string|int $offset 偏移数量
+     * @param string|int $count  返回数量，取值区间 (0,20]
+     *
      * @return array
-     * 
+     *
      * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/#getTemplateLibraryList/
      */
     public function library($offset = 0, $count = 20)
@@ -110,8 +114,9 @@ class BaiduTemplate extends BaiduAbstractClient
      * 获取模板库某个模板标题下的关键词库
      *
      * @param string $id 模板库 ID
+     *
      * @return array
-     * 
+     *
      * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/#getTemplateLibraryById/
      */
     public function find($id)
@@ -130,6 +135,7 @@ class BaiduTemplate extends BaiduAbstractClient
      *
      * @param string $id 模板库 ID
      * @param array $keywords 模板关键词 ID 数组，如 [1,2,3]
+     * 
      * @return array
      * 
      * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/#addTemplate/
@@ -142,7 +148,7 @@ class BaiduTemplate extends BaiduAbstractClient
         }
 
         $request = $this->buildRequest([
-            'id' => $id,
+            'id'              => $id,
             'keyword_id_list' => json_encode($keywords),
         ], 'templateadd');
 
@@ -154,10 +160,11 @@ class BaiduTemplate extends BaiduAbstractClient
     /**
      * 获取小程序下已存在的模板列表
      *
-     * @param string|integer $offset 偏移数量
-     * @param string|integer $count 返回数量
+     * @param string|int $offset 偏移数量
+     * @param string|int $count  返回数量
+     *
      * @return array
-     * 
+     *
      * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/#getTemplateList/
      */
     public function get($offset = 0, $count = 20)
@@ -176,9 +183,9 @@ class BaiduTemplate extends BaiduAbstractClient
      * 删除小程序下的某个模板
      *
      * @param string $templateId
-     * 
+     *
      * @return array
-     * 
+     *
      * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/#deleteTemplate/
      */
     public function delete($templateId)
