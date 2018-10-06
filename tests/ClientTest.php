@@ -2,6 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 use BaiduMiniProgram\BaiduClient;
+use BaiduMiniProgram\BaiduTemplate;
+use Http\Adapter\Guzzle5\Client;
 
 class ClientTest extends TestCase
 {
@@ -11,7 +13,7 @@ class ClientTest extends TestCase
             $appSecret = getenv('APP_SECRET')
         );
 
-        return new BaiduClient('BNQfGXeHyAt83x0qmoK6hvOEdYwCjfeg', $appSecret);
+        return new BaiduClient('BNQfGXeHyAt83x0qmoK6hvOEdYwCjfeg', $appSecret, new Client());
     }
 
     public function testDecrypt()
@@ -42,14 +44,38 @@ class ClientTest extends TestCase
         $this->assertArrayHasKey('refresh_token', $credential);
         $this->assertArrayHasKey('session_key', $credential);
         $this->assertArrayHasKey('session_secret', $credential);
+
+        return $credential;
     }
 
     /**
-     * @depends testCreate
+     * @depends           testCreate
      * @expectedException BaiduMiniProgram\Exceptions\BaiduResponseException
      */
     public function testBadCode(BaiduClient $baidu)
     {
         $baidu->session('bad code');
+    }
+
+    /**
+     * @depends testCreate
+     */
+    public function testGetTemplate(BaiduClient $baidu)
+    {
+        $template = $baidu->template();
+
+        $this->assertTrue($template instanceof BaiduTemplate);
+
+        return $template;
+    }
+
+    /**
+     * @depends testGetTemplate
+     */
+    public function testTemplateMethods(BaiduTemplate $tpl)
+    {
+        $list = $tpl->libraryList();
+
+        $this->assertArrayHasKey('data', $list);
     }
 }
