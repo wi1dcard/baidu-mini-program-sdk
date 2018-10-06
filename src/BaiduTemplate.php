@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
+use Psr\Http\Message\RequestInterface;
 
 class BaiduTemplate extends BaiduAbstractClient
 {
@@ -129,7 +130,7 @@ class BaiduTemplate extends BaiduAbstractClient
      *
      * @param string $id 模板库 ID
      * @param array $keywords 模板关键词 ID 数组，如 [1,2,3]
-     * @return void
+     * @return array
      * 
      * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/#addTemplate/
      */
@@ -183,8 +184,7 @@ class BaiduTemplate extends BaiduAbstractClient
     public function delete($templateId)
     {
         $request = $this->buildRequest([
-            'offset' => $offset,
-            'count'  => $count,
+            'template_id' => $templateId,
         ], 'templatedel');
 
         return $this->sendRequestThenParse($request);
