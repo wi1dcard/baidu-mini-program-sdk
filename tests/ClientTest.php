@@ -74,7 +74,7 @@ class ClientTest extends TestCase
      */
     public function testTemplateMethods(BaiduTemplate $tpl)
     {
-        $list = $tpl->libraryList();
+        $list = $tpl->library();
 
         $this->assertArrayHasKey('data', $list);
     }
