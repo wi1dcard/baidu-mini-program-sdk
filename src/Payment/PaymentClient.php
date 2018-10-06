@@ -4,10 +4,10 @@ namespace BaiduMiniProgram\Payment;
 
 use BaiduMiniProgram\Exceptions\BaiduInvalidSignException;
 use BaiduMiniProgram\ParseResponseTrait;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Client\HttpClient;
-use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
+use Http\Client\HttpClient;
+use Http\Discovery\HttpClientDiscovery;
 
 class PaymentClient
 {
@@ -58,12 +58,12 @@ class PaymentClient
     /**
      * 创建支付客户端
      *
-     * @param string|int      $dealId     百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
-     * @param string          $appKey     百度收银台 App Key，此值并非智能小程序平台分配，请不要混淆 {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
-     * @param mixed           $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
-     * @param mixed           $publicKey  PEM 格式的平台公钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-public.php}
-     * @param HttpClient      $httpClient HTTP 客户端，用于发送请求
-     * @param Signer          $signer     签名器，用于生成签名、验证签名
+     * @param string|int $dealId     百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
+     * @param string     $appKey     百度收银台 App Key，此值并非智能小程序平台分配，请不要混淆 {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
+     * @param mixed      $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
+     * @param mixed      $publicKey  PEM 格式的平台公钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-public.php}
+     * @param HttpClient $httpClient HTTP 客户端，用于发送请求
+     * @param Signer     $signer     签名器，用于生成签名、验证签名
      */
     public function __construct(
         $dealId,

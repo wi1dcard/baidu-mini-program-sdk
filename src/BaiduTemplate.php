@@ -2,11 +2,11 @@
 
 namespace BaiduMiniProgram;
 
-use Psr\Http\Message\UriInterface;
-use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
-use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 
 class BaiduTemplate
 {
@@ -32,7 +32,7 @@ class BaiduTemplate
     /**
      * 创建模板对象实例
      *
-     * @param string $accessToken
+     * @param string     $accessToken
      * @param HttpClient $httpClient
      */
     public function __construct($accessToken, HttpClient $httpClient = null)
@@ -55,7 +55,7 @@ class BaiduTemplate
     {
         $request = $this->buildRequest([
             'offset' => $offset,
-            'count' => $count,
+            'count'  => $count,
         ]);
 
         $response = $this->httpClient->sendRequest($request);
@@ -65,26 +65,21 @@ class BaiduTemplate
 
     public function find()
     {
-
     }
 
     public function add()
     {
-
     }
 
     public function get()
     {
-
     }
 
     public function delete()
     {
-
     }
 
     public function sendMessage()
     {
-
     }
 }
