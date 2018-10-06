@@ -73,8 +73,19 @@ class ClientTest extends TestCase
      */
     public function testTemplateMethods(BaiduTemplate $tpl)
     {
-        $list = $tpl->library();
+        $data = $tpl->library();
+        $this->assertGreaterThan(2000, $data['total_count']);
 
-        $this->assertArrayHasKey('data', $list);
+        $data = $tpl->find('BD0016');
+        $this->assertEquals('取票成功通知', $data['title']);
+
+        $data = $tpl->add('BD0016', [1, 2]);
+        $templateId = $data['template_id'];
+        $this->assertNotEmpty($templateId);
+
+        $data = $tpl->get();
+        $this->assertGreaterThan(1, $data['total_count']);
+
+        $data = $tpl->delete($templateId);
     }
 }
