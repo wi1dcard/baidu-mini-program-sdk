@@ -51,7 +51,7 @@ class BaiduTemplate
         return $this->parseResponse($response, static::RESPONSE_FIELD, static::RESPONSE_MESSAGE_FIELD);
     }
 
-    public function libraryList($offset = 0, $count = 20)
+    public function library($offset = 0, $count = 20)
     {
         $request = $this->buildRequest([
             'offset' => $offset,
@@ -63,7 +63,7 @@ class BaiduTemplate
         return $this->parseTemplateResponse($response);
     }
 
-    public function libraryFind()
+    public function find()
     {
 
     }
@@ -73,7 +73,7 @@ class BaiduTemplate
 
     }
 
-    public function list()
+    public function get()
     {
 
     }
