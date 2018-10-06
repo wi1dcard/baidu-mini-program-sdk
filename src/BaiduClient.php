@@ -4,10 +4,10 @@ namespace BaiduMiniProgram;
 
 use BaiduMiniProgram\Exceptions\BaiduDecryptException;
 use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
-use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
-use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 
 class BaiduClient
 {
@@ -37,9 +37,9 @@ class BaiduClient
     /**
      * 创建小程序实例
      *
-     * @param string          $appKey     小程序 App Key，又称 Client ID，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
-     * @param string          $appSecret  小程序 App Secret，又称 Client Secret，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
-     * @param HttpClient      $httpClient HTTP 客户端，用于发送请求
+     * @param string     $appKey     小程序 App Key，又称 Client ID，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
+     * @param string     $appSecret  小程序 App Secret，又称 Client Secret，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
+     * @param HttpClient $httpClient HTTP 客户端，用于发送请求
      */
     public function __construct($appKey, $appSecret, HttpClient $httpClient = null)
     {
