@@ -4,10 +4,9 @@ namespace BaiduMiniProgram;
 
 use BaiduMiniProgram\Exceptions\BaiduDecryptException;
 use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
+use Http\Client\HttpClient;
+use Http\Discovery\HttpClientDiscovery;
 
 class BaiduClient
 {
@@ -30,7 +29,7 @@ class BaiduClient
     /**
      * HTTP 客户端
      *
-     * @var ClientInterface
+     * @var HttpClient
      */
     protected $httpClient;
 
@@ -39,13 +38,13 @@ class BaiduClient
      *
      * @param string          $appKey     小程序 App Key，又称 Client ID，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
      * @param string          $appSecret  小程序 App Secret，又称 Client Secret，可从开发者后台查看 {@link https://smartprogram.baidu.com/docs/introduction/register_prepare/}
-     * @param ClientInterface $httpClient HTTP 客户端，用于发送请求
+     * @param HttpClient      $httpClient HTTP 客户端，用于发送请求
      */
-    public function __construct($appKey, $appSecret, ClientInterface $httpClient = null)
+    public function __construct($appKey, $appSecret, HttpClient $httpClient = null)
     {
         $this->appKey = $appKey;
         $this->appSecret = $appSecret;
-        $this->httpClient = $httpClient ?: new Client();
+        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
     }
 
     /**
@@ -59,7 +58,7 @@ class BaiduClient
     {
         $request = $this->buildOauthRequest();
 
-        $response = $this->httpClient->send($request);
+        $response = $this->httpClient->sendRequest($request);
 
         $content = $this->parseResponse($response);
 
@@ -84,7 +83,7 @@ class BaiduClient
 
         $body = \GuzzleHttp\Psr7\build_query($data);
 
-        return new Request('POST', $uri, [], $body);
+        return new \GuzzleHttp\Psr7\Request('POST', $uri, [], $body);
     }
 
     /**
@@ -100,7 +99,7 @@ class BaiduClient
     {
         $request = $this->buildSessionRequest($code);
 
-        $response = $this->httpClient->send($request);
+        $response = $this->httpClient->sendRequest($request);
 
         $content = $this->parseResponse($response, 'errno', 'error_description');
 
@@ -126,7 +125,7 @@ class BaiduClient
 
         $body = \GuzzleHttp\Psr7\build_query($data);
 
-        return new Request('POST', $uri, [], $body);
+        return new \GuzzleHttp\Psr7\Request('POST', $uri, [], $body);
     }
 
     /**

@@ -20,7 +20,7 @@ trait ParseResponseTrait
     }
 
     /**
-     * 解析 JSON
+     * JSON 解码
      *
      * @param string $json
      *
@@ -28,7 +28,15 @@ trait ParseResponseTrait
      */
     protected function decodeJsonResponse($json)
     {
-        return \GuzzleHttp\json_decode($json, true);
+        $data = json_decode($json, true);
+
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new BaiduResponseException(
+                'json_decode error: ' . json_last_error_msg()
+            );
+        }
+
+        return $data;
     }
 
     /**

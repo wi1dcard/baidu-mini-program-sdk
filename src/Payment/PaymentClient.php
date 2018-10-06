@@ -4,9 +4,8 @@ namespace BaiduMiniProgram\Payment;
 
 use BaiduMiniProgram\Exceptions\BaiduInvalidSignException;
 use BaiduMiniProgram\ParseResponseTrait;
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Request;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Client\HttpClient;
 use GuzzleHttp\Psr7\Uri;
 
 class PaymentClient
@@ -51,7 +50,7 @@ class PaymentClient
     /**
      * HTTP 客户端
      *
-     * @var ClientInterface
+     * @var HttpClient
      */
     protected $httpClient;
 
@@ -60,9 +59,9 @@ class PaymentClient
      *
      * @param string|int      $dealId     百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
      * @param string          $appKey     百度收银台 App Key，此值并非智能小程序平台分配，请不要混淆 {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
-     * @param mixed           $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径  {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
+     * @param mixed           $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
      * @param mixed           $publicKey  PEM 格式的平台公钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-public.php}
-     * @param ClientInterface $httpClient HTTP 客户端，用于发送请求
+     * @param HttpClient      $httpClient HTTP 客户端，用于发送请求
      * @param Signer          $signer     签名器，用于生成签名、验证签名
      */
     public function __construct(
@@ -70,7 +69,7 @@ class PaymentClient
         $appKey,
         $privateKey = null,
         $publicKey = null,
-        ClientInterface $httpClient = null,
+        HttpClient $httpClient = null,
         Signer $signer = null
     ) {
         $this->dealId = $dealId;
@@ -79,7 +78,7 @@ class PaymentClient
         $this->privateKey = openssl_pkey_get_private($privateKey);
         $this->publicKey = openssl_pkey_get_public($publicKey);
 
-        $this->httpClient = $httpClient ?: new Client();
+        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
         $this->signer = $signer ?: new Signer();
     }
 
@@ -136,7 +135,7 @@ class PaymentClient
     {
         $request = $this->buildOrderDetailRequest($orderId, $userId);
 
-        $response = $this->httpClient->send($request);
+        $response = $this->httpClient->sendRequest($request);
 
         return $this->parseResponse($response, 'errno', 'errmsg');
     }
@@ -157,7 +156,7 @@ class PaymentClient
         $uri = (new Uri('https://dianshang.baidu.com/platform/entity/openapi/queryorderdetail'))
             ->withQuery($query);
 
-        return new Request('GET', $uri);
+        return new \GuzzleHttp\Psr7\Request('GET', $uri);
     }
 
     /**
@@ -175,7 +174,7 @@ class PaymentClient
     {
         $request = $this->buildOrderRefundRequest($orderId, $userId, $tpOrderId, $refundType, $refundReason);
 
-        $response = $this->httpClient->send($request);
+        $response = $this->httpClient->sendRequest($request);
 
         return $this->parseResponse($response, 'errno', 'msg');
     }
@@ -198,7 +197,7 @@ class PaymentClient
 
         $body = \GuzzleHttp\Psr7\build_query($data);
 
-        return new Request('POST', $uri, [], $body);
+        return new \GuzzleHttp\Psr7\Request('POST', $uri, [], $body);
     }
 
     /**
