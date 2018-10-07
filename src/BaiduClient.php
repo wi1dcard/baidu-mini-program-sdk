@@ -3,16 +3,16 @@
 namespace BaiduMiniProgram;
 
 use BaiduMiniProgram\Client\BaiduAbstractClient;
+use BaiduMiniProgram\Client\BaiduServiceClient;
 use BaiduMiniProgram\Exceptions\BaiduDecryptException;
 use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
 use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
-use BaiduMiniProgram\Client\BaiduServiceClient;
 
 /**
  * 百度智能小程序
- * 
+ *
  * @see https://smartprogram.baidu.com/docs/develop/api/open_log/
  */
 class BaiduClient extends BaiduAbstractClient
@@ -202,7 +202,7 @@ class BaiduClient extends BaiduAbstractClient
     public function serviceClient()
     {
         $credential = $this->oauth();
-        
+
         return new BaiduServiceClient(
             $credential['access_token'],
             $this->httpClient
