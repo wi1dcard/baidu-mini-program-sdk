@@ -6,37 +6,20 @@ use BaiduMiniProgram\BaiduTemplate;
 
 class ClientTest extends TestCase
 {
-    public function testCreate()
+    protected $baidu;
+
+    public function setUp()
     {
         $this->assertNotEmpty(
             $appSecret = getenv('APP_SECRET')
         );
 
-        return new BaiduClient('BNQfGXeHyAt83x0qmoK6hvOEdYwCjfeg', $appSecret);
+        $this->baidu = new BaiduClient('BNQfGXeHyAt83x0qmoK6hvOEdYwCjfeg', $appSecret);
     }
 
-    public function testDecrypt()
+    public function testOauth()
     {
-        $baidu = new BaiduClient('y2dTfnWfkx2OXttMEMWlGHoB1KzMogm7', '');
-
-        $data = $baidu->decrypt(
-            file_get_contents(__DIR__ . '/cipher.txt'),
-            '1df09d0a1677dd72b8325Q==',
-            '1df09d0a1677dd72b8325aec59576e0c'
-        );
-
-        $this->assertEquals(
-            '{"openid":"open_id","nickname":"baidu_user","headimgurl":"url of image","sex":1}',
-            $data
-        );
-    }
-
-    /**
-     * @depends testCreate
-     */
-    public function testOauth(BaiduClient $baidu)
-    {
-        $credential = $baidu->oauth();
+        $credential = $this->baidu->oauth();
 
         $this->assertArrayHasKey('access_token', $credential);
         $this->assertArrayHasKey('expires_in', $credential);
@@ -48,20 +31,16 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @depends           testCreate
      * @expectedException BaiduMiniProgram\Exceptions\BaiduResponseException
      */
-    public function testBadCode(BaiduClient $baidu)
+    public function testBadCode()
     {
-        $baidu->session('bad code');
+        $this->baidu->session('bad code');
     }
 
-    /**
-     * @depends testCreate
-     */
-    public function testGetTemplate(BaiduClient $baidu)
+    public function testGetTemplate()
     {
-        $template = $baidu->template();
+        $template = $this->baidu->template();
 
         $this->assertTrue($template instanceof BaiduTemplate);
 
