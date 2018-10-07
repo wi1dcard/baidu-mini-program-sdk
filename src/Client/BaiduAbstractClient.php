@@ -43,4 +43,14 @@ abstract class BaiduAbstractClient
 
         return $client;
     }
+
+    /**
+     * 返回自身类名
+     *
+     * @return string
+     */
+    public static function className()
+    {
+        return __CLASS__;
+    }
 }
