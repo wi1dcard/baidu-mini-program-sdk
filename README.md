@@ -123,7 +123,6 @@ $data = (new BaiduTemplateMessage($templateId, $serviceClient))
         'keyword1' => 'foo',
         'keyword2' => 'bar',
     ])
-    ->withPage('index?foo=bar');
     ->sendTo('小程序用户 Swan ID', 'Scene ID');
 // $data 为发送结果，即接口响应的 `data` 字段。
 ```
