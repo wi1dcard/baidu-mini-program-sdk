@@ -21,9 +21,9 @@ abstract class BaiduAbstractService
     public function __construct(BaiduServiceClient $client)
     {
         $client->setBaseUri($this->baseUri());
-        
+
         $this->client = $client;
     }
 
-    protected abstract function baseUri();
+    abstract protected function baseUri();
 }

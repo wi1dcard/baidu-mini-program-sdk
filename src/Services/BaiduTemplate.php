@@ -2,15 +2,9 @@
 
 namespace BaiduMiniProgram\Services;
 
-use GuzzleHttp\Psr7\Request;
-use Http\Client\HttpClient;
-use Psr\Http\Message\RequestInterface;
-use BaiduMiniProgram\Client\BaiduServiceAbstractClient;
-use BaiduMiniProgram\Client\BaiduServiceClient;
-
 /**
  * 消息模版
- * 
+ *
  * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/
  */
 class BaiduTemplate extends BaiduAbstractService
@@ -25,10 +19,10 @@ class BaiduTemplate extends BaiduAbstractService
      *
      * @param string $offset
      * @param string $count
-     * 
-     * @return void
-     * 
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     protected function validateOffsetCount($offset, $count)
     {

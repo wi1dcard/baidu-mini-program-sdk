@@ -2,12 +2,10 @@
 
 namespace BaiduMiniProgram\Client;
 
-use BaiduMiniProgram\Client\BaiduAbstractClient;
+use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Psr7\Request;
-use BaiduMiniProgram\Client\BaiduServiceAbstractClient;
 
 class BaiduServiceClient extends BaiduAbstractClient
 {
@@ -42,7 +40,7 @@ class BaiduServiceClient extends BaiduAbstractClient
      * 设置 Base URI
      *
      * @param string $baseUri
-     * 
+     *
      * @return void
      */
     public function setBaseUri($baseUri)
@@ -63,8 +61,8 @@ class BaiduServiceClient extends BaiduAbstractClient
     /**
      * 构建服务请求
      *
-     * @param string $action
-     * @param array|object  $parameters
+     * @param string       $action
+     * @param array|object $parameters
      *
      * @return RequestInterface
      */
@@ -106,8 +104,9 @@ class BaiduServiceClient extends BaiduAbstractClient
     /**
      * 构建、发送请求并解析响应
      *
-     * @param string $action
+     * @param string       $action
      * @param array|object $parameters
+     *
      * @return array
      */
     public function request($action, $parameters)
