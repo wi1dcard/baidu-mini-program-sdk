@@ -8,6 +8,7 @@ use BaiduMiniProgram\Exceptions\BaiduOpenSslException;
 use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
+use BaiduMiniProgram\Client\BaiduServiceClient;
 
 /**
  * 百度智能小程序
@@ -194,14 +195,17 @@ class BaiduClient extends BaiduAbstractClient
     }
 
     /**
-     * 获取 BaiduTemplate 对象
+     * 返回服务客户端实例
      *
-     * @return BaiduTemplate
+     * @return BaiduServiceClient
      */
-    public function template()
+    public function serviceClient()
     {
         $credential = $this->oauth();
-
-        return new BaiduTemplate($credential['access_token'], $this->httpClient);
+        
+        return new BaiduServiceClient(
+            $credential['access_token'],
+            $this->httpClient
+        );
     }
 }

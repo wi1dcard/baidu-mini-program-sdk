@@ -1,83 +1,37 @@
 <?php
 
-namespace BaiduMiniProgram;
+namespace BaiduMiniProgram\Services;
 
-use BaiduMiniProgram\Client\BaiduAbstractClient;
 use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\RequestInterface;
+use BaiduMiniProgram\Client\BaiduServiceAbstractClient;
+use BaiduMiniProgram\Client\BaiduServiceClient;
 
-class BaiduTemplate extends BaiduAbstractClient
+/**
+ * 消息模版
+ * 
+ * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/
+ */
+class BaiduTemplate extends BaiduAbstractService
 {
-    const RESPONSE_FIELD = 'errno';
-    const RESPONSE_MESSAGE_FIELD = 'msg';
-    const GATEWAY = 'https://openapi.baidu.com/rest/2.0/smartapp/template';
-
-    /**
-     * Access Token
-     *
-     * @var string
-     */
-    protected $accessToken;
-
-    /**
-     * 创建模板对象实例
-     *
-     * @param string     $accessToken
-     * @param HttpClient $httpClient
-     */
-    public function __construct($accessToken, HttpClient $httpClient = null)
+    protected function baseUri()
     {
-        $this->accessToken = $accessToken;
-
-        parent::__construct($httpClient);
+        return 'https://openapi.baidu.com/rest/2.0/smartapp/template/';
     }
 
     /**
-     * 构建消息模板的请求
+     * 验证 Offset 和 Count 参数
      *
-     * @param array  $params
-     * @param string $action
-     *
-     * @return RequestInterface
+     * @param string $offset
+     * @param string $count
+     * 
+     * @return void
+     * 
+     * @throws \InvalidArgumentException
      */
-    protected function buildRequest($params, $action)
-    {
-        $uri = static::GATEWAY . '/' . $action . '?access_token=' . $this->accessToken;
-
-        return new Request('POST', $uri, [], \GuzzleHttp\Psr7\build_query($params));
-    }
-
-    /**
-     * 解析消息模板请求的响应
-     *
-     * @param ResponseInterface $response
-     *
-     * @return array
-     */
-    protected function parseTemplateResponse(ResponseInterface $response)
-    {
-        $result = $this->parseResponse($response, static::RESPONSE_FIELD, static::RESPONSE_MESSAGE_FIELD);
-
-        return $result['data'];
-    }
-
-    /**
-     * 发送请求并解析响应
-     *
-     * @param RequestInterface $request
-     *
-     * @return array
-     */
-    protected function sendRequestThenParse($request)
-    {
-        $response = $this->httpClient->sendRequest($request);
-
-        return $this->parseTemplateResponse($response);
-    }
-
     protected function validateOffsetCount($offset, $count)
     {
         if ($offset < 0) {
@@ -102,12 +56,10 @@ class BaiduTemplate extends BaiduAbstractClient
     {
         $this->validateOffsetCount($offset, $count);
 
-        $request = $this->buildRequest([
+        return $this->client->request('librarylist', [
             'offset' => $offset,
             'count'  => $count,
-        ], 'librarylist');
-
-        return $this->sendRequestThenParse($request);
+        ]);
     }
 
     /**
@@ -121,13 +73,9 @@ class BaiduTemplate extends BaiduAbstractClient
      */
     public function find($id)
     {
-        $request = $this->buildRequest([
+        return $this->client->request('libraryget', [
             'id' => $id,
-        ], 'libraryget');
-
-        $response = $this->httpClient->sendRequest($request);
-
-        return $this->parseTemplateResponse($response);
+        ]);
     }
 
     /**
@@ -147,14 +95,10 @@ class BaiduTemplate extends BaiduAbstractClient
             throw new \InvalidArgumentException('Invalid number of keywords, valid range: [2,6].');
         }
 
-        $request = $this->buildRequest([
+        return $this->client->request('templateadd', [
             'id'              => $id,
             'keyword_id_list' => json_encode($keywords),
-        ], 'templateadd');
-
-        $response = $this->httpClient->sendRequest($request);
-
-        return $this->parseTemplateResponse($response);
+        ]);
     }
 
     /**
@@ -171,18 +115,16 @@ class BaiduTemplate extends BaiduAbstractClient
     {
         $this->validateOffsetCount($offset, $count);
 
-        $request = $this->buildRequest([
+        return $this->client->request('templatelist', [
             'offset' => $offset,
             'count'  => $count,
-        ], 'templatelist');
-
-        return $this->sendRequestThenParse($request);
+        ]);
     }
 
     /**
      * 删除小程序下的某个模板
      *
-     * @param string $templateId
+     * @param string $templateId 模板 ID
      *
      * @return array
      *
@@ -190,14 +132,8 @@ class BaiduTemplate extends BaiduAbstractClient
      */
     public function delete($templateId)
     {
-        $request = $this->buildRequest([
+        return $this->client->request('templatedel', [
             'template_id' => $templateId,
-        ], 'templatedel');
-
-        return $this->sendRequestThenParse($request);
-    }
-
-    public function sendMessage()
-    {
+        ]);
     }
 }

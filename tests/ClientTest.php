@@ -2,10 +2,14 @@
 
 use PHPUnit\Framework\TestCase;
 use BaiduMiniProgram\BaiduClient;
-use BaiduMiniProgram\BaiduTemplate;
+use BaiduMiniProgram\Client\BaiduServiceClient;
+use BaiduMiniProgram\Services\BaiduTemplate;
 
 class ClientTest extends TestCase
 {
+    /**
+     * @var BaiduClient
+     */
     protected $baidu;
 
     public function setUp()
@@ -38,20 +42,22 @@ class ClientTest extends TestCase
         $this->baidu->session('bad code');
     }
 
-    public function testGetTemplate()
+    public function testGetServiceClient()
     {
-        $template = $this->baidu->template();
+        $client = $this->baidu->serviceClient();
 
-        $this->assertTrue($template instanceof BaiduTemplate);
+        $this->assertTrue($client instanceof BaiduServiceClient);
 
-        return $template;
+        return $client;
     }
 
     /**
-     * @depends testGetTemplate
+     * @depends testGetServiceClient
      */
-    public function testTemplateMethods(BaiduTemplate $tpl)
+    public function testTemplateMethods(BaiduServiceClient $client)
     {
+        $tpl = new BaiduTemplate($client);
+
         $data = $tpl->library();
         $this->assertGreaterThan(2000, $data['total_count']);
 
