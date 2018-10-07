@@ -32,7 +32,7 @@ trait ParseResponseTrait
 
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new BaiduResponseException(
-                'json_decode error: ' . json_last_error_msg()
+                'Response data cannot be decoded as json: ' . json_last_error_msg()
             );
         }
 
