@@ -145,7 +145,7 @@ $data = (new BaiduTemplateMessage($templateId, $serviceClient))
 
 当然，你可以替换成自己喜欢的客户端，查看受支持的 [客户端列表](https://packagist.org/providers/php-http/client-implementation)。
 
-例如替换为 Guzzle 6。
+例如替换为 `Guzzle 6.x`。
 
 ```bash
 composer require guzzlehttp/guzzle:^6.0 # 安装 Guzzle，若已安装可跳过
