@@ -9,6 +9,11 @@ use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * 百度智能小程序
+ * 
+ * @see https://smartprogram.baidu.com/docs/develop/api/open_log/
+ */
 class BaiduClient extends BaiduAbstractClient
 {
     /**
@@ -83,7 +88,7 @@ class BaiduClient extends BaiduAbstractClient
      *
      * @param string $code
      *
-     * @return mixed
+     * @return array
      *
      * @see https://smartprogram.baidu.com/docs/develop/api/open_log/#Session-Key/
      */
