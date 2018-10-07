@@ -102,7 +102,31 @@ $decrypted = $app->decrypt($data, $iv, $credential['session_key']);
 
 ### 模版消息
 
-TODO
+在智能小程序开发者后台创建「消息模板」后，即可发送「模板消息」，过程与微信小程序类似。不过，百度小程序支持调用开放接口增删模板消息，这为部分业务场景提供了更加便捷的解决方案。
+
+根据 [官方文档](https://smartprogram.baidu.com/docs/develop/api/open_infomation/), 相关接口本 SDK 调用例子如下。
+
+```php
+use BaiduMiniProgram\Services\BaiduTemplate; // 消息模板
+use BaiduMiniProgram\Services\BaiduTemplateMessage; // 模板消息
+
+// 获取 BaiduServiceClient 实例，此实例包含 HTTP Client，主要用于发送请求。
+$serviceClient = $app->serviceClient();
+
+// 创建 BaiduTemplate 实例，用于管理消息模板。
+$template = new BaiduTemplate($serviceClient);
+// 调用 $template 相关方法即可。
+
+// 根据模板 ID，发送模板消息，可链式调用。
+$data = (new BaiduTemplateMessage($templateId, $serviceClient))
+    ->withKeywords([
+        'keyword1' => 'foo',
+        'keyword2' => 'bar',
+    ])
+    ->withPage('index?foo=bar');
+    ->sendTo('小程序用户 Swan ID', 'Scene ID');
+// $data 为发送结果，即接口响应的 `data` 字段。
+```
 
 ### 支付
 
