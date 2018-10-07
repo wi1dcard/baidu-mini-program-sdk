@@ -4,8 +4,6 @@ namespace BaiduMiniProgram\Services;
 
 use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\RequestInterface;
 use BaiduMiniProgram\Client\BaiduServiceAbstractClient;
 use BaiduMiniProgram\Client\BaiduServiceClient;
@@ -81,11 +79,11 @@ class BaiduTemplate extends BaiduAbstractService
     /**
      * 组合模板并添加至小程序下的模板库
      *
-     * @param string $id 模板库 ID
-     * @param array $keywords 模板关键词 ID 数组，如 [1,2,3]
-     * 
+     * @param string $id       模板库 ID
+     * @param array  $keywords 模板关键词 ID 数组，如 [1,2,3]
+     *
      * @return array
-     * 
+     *
      * @see https://smartprogram.baidu.com/docs/develop/api/open_infomation/#addTemplate/
      */
     public function add($id, $keywords)
