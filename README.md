@@ -184,12 +184,12 @@ $app = new BaiduClient('App Key', 'App Secret', new YourHttpClient());
 
 难不成... 是大佬被挖走了？
 
-最后，欢迎关注我们的产品：
-
-[<img src="https://i.loli.net/2018/07/24/5b56dda76b2ba.png" width="30%" height="30%">](http://www.zjhejiang.com/)
-
 ## 协议
 
 MIT
 
 欢迎 Issue / PR。
+
+欢迎关注我们的产品。
+
+[<img src="https://i.loli.net/2018/07/24/5b56dda76b2ba.png" width="30%" height="30%">](http://www.zjhejiang.com/)
