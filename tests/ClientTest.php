@@ -42,6 +42,23 @@ class ClientTest extends TestCase
         $this->baidu->session('bad code');
     }
 
+    public function testCode()
+    {
+        $code = getenv('CODE');
+
+        if ($code == '') {
+            $this->assertTrue(true);
+            return;
+        }
+
+        $data = $this->baidu->session($code);
+
+        $this->assertArrayHasKey('openid', $data);
+        $this->assertArrayHasKey('session_key', $data);
+
+        return $data;
+    }
+
     public function testGetServiceClient()
     {
         $client = $this->baidu->serviceClient();
