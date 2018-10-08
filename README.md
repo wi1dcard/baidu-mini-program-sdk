@@ -5,10 +5,12 @@ Baidu Smart Mini-Program SDK for PHP
 
 🐾 百度小程序第三方 PHP SDK，遵循 PSR-7、支持 PHP 5.4，助力智能小程序开发。
 
+[![License](https://img.shields.io/packagist/l/wi1dcard/baidu-mini-program-sdk.svg)](https://github.com/wi1dcard/baidu-mini-program-sdk)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/wi1dcard/baidu-mini-program-sdk.svg)](https://github.com/wi1dcard/baidu-mini-program-sdk)
+[![Packagist](https://img.shields.io/packagist/v/wi1dcard/baidu-mini-program-sdk.svg)](https://packagist.org/packages/wi1dcard/baidu-mini-program-sdk)
 [![Build Status](https://travis-ci.org/wi1dcard/baidu-mini-program-sdk.svg?branch=master)](https://travis-ci.org/wi1dcard/baidu-mini-program-sdk)
 [![Coverage Status](https://coveralls.io/repos/github/wi1dcard/baidu-mini-program-sdk/badge.svg)](https://coveralls.io/github/wi1dcard/baidu-mini-program-sdk)
 [![StyleCI](https://github.styleci.io/repos/151553953/shield?branch=master)](https://github.styleci.io/repos/151553953)
-[![Packagist](https://img.shields.io/packagist/v/wi1dcard/baidu-mini-program-sdk.svg)](https://packagist.org/packages/wi1dcard/baidu-mini-program-sdk)
 
 ❤️ 本项目 [GitHub](https://github.com/wi1dcard/baidu-mini-program-sdk-php) / [Gitee(码云)](https://gitee.com/wi1dcard/baidu-mini-program-sdk-php)。
 
