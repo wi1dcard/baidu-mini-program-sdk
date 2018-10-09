@@ -175,9 +175,10 @@ $app = new BaiduClient('App Key', 'App Secret', new YourHttpClient());
 
 ## 其它资源
 
-- [百度小程序官方文档](https://smartprogram.baidu.com/docs/develop/tutorial/codedir/)
+- [百度智能小程序官方文档](https://smartprogram.baidu.com/docs/develop/tutorial/codedir/)
+- [百度智能小程序官方支付文档](https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/product_intro.md)
 - [百度小程序开发资源汇总](https://github.com/quickappdev/awesome-smartapp)
-- [百度小程序接入支付](https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/product_intro.md)
+- [微信小程序转百度小程序评估](./WECHAT-TO-BAIDU.md)
 
 ## 感想
 
