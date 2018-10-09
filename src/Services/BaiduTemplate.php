@@ -48,7 +48,7 @@ class BaiduTemplate extends BaiduAbstractService
     {
         $this->validateOffsetCount($offset, $count);
 
-        return $this->client->request('librarylist', [
+        return $this->serviceClient->request('librarylist', [
             'offset' => $offset,
             'count'  => $count,
         ]);
@@ -65,7 +65,7 @@ class BaiduTemplate extends BaiduAbstractService
      */
     public function find($id)
     {
-        return $this->client->request('libraryget', [
+        return $this->serviceClient->request('libraryget', [
             'id' => $id,
         ]);
     }
@@ -87,7 +87,7 @@ class BaiduTemplate extends BaiduAbstractService
             throw new \InvalidArgumentException('Invalid number of keywords, valid range: [2,6].');
         }
 
-        return $this->client->request('templateadd', [
+        return $this->serviceClient->request('templateadd', [
             'id'              => $id,
             'keyword_id_list' => json_encode($keywords),
         ]);
@@ -107,7 +107,7 @@ class BaiduTemplate extends BaiduAbstractService
     {
         $this->validateOffsetCount($offset, $count);
 
-        return $this->client->request('templatelist', [
+        return $this->serviceClient->request('templatelist', [
             'offset' => $offset,
             'count'  => $count,
         ]);
@@ -124,7 +124,7 @@ class BaiduTemplate extends BaiduAbstractService
      */
     public function delete($templateId)
     {
-        return $this->client->request('templatedel', [
+        return $this->serviceClient->request('templatedel', [
             'template_id' => $templateId,
         ]);
     }

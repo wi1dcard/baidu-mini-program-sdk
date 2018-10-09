@@ -114,7 +114,7 @@ class BaiduTemplateMessage extends BaiduAbstractService
             throw new \RuntimeException('This template message is not ready to send now.');
         }
 
-        return $this->client->request('send', [
+        return $this->serviceClient->request('send', [
             'template_id' => $this->templateId,
             'touser'      => $swanId,
             'data'        => json_encode($this->data),
