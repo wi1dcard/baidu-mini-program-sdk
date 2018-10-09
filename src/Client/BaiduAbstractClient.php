@@ -38,7 +38,10 @@ abstract class BaiduAbstractClient
         }
 
         if ($client === null) {
-            $client = new BaiduHttpClient();
+            $client = new BaiduHttpClient([
+                CURLOPT_FAILONERROR    => false,
+                CURLOPT_SSL_VERIFYPEER => false,
+            ]);
         }
 
         return $client;
