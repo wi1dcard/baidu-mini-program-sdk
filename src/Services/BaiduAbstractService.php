@@ -11,18 +11,18 @@ abstract class BaiduAbstractService
      *
      * @var BaiduServiceClient
      */
-    public $client;
+    protected $serviceClient;
 
     /**
      * 创建服务对象
      *
      * @param BaiduServiceClient $client
      */
-    public function __construct(BaiduServiceClient $client)
+    public function __construct(BaiduServiceClient $serviceClient)
     {
-        $client->setBaseUri($this->baseUri());
+        $serviceClient->setBaseUri($this->baseUri());
 
-        $this->client = $client;
+        $this->serviceClient = $serviceClient;
     }
 
     abstract protected function baseUri();
