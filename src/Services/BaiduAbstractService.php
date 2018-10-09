@@ -16,7 +16,7 @@ abstract class BaiduAbstractService
     /**
      * 创建服务对象
      *
-     * @param BaiduServiceClient $client
+     * @param BaiduServiceClient $serviceClient
      */
     public function __construct(BaiduServiceClient $serviceClient)
     {
