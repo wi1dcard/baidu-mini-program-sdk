@@ -306,11 +306,11 @@ class PaymentClient extends BaiduAbstractClient
      *
      * @param callable $handler      回调函数，成功验证签名后则会调用，应当在此回调内编写业务逻辑，若出现失败应当抛出异常，本方法将会捕捉并处理
      * @param callable $errorHandler 错误回调函数，若执行过程中发生任何错误则会调用，可用于记录日志等
-     * @param array    $params       请求参数（默认使用 $_POST）
+     * @param array    $parameters   请求参数（默认使用 $_POST）
      *
      * @return string
      */
-    public function handleNotification($handler, $errorHandler = null, $params = null)
+    public function handleNotification($handler, $errorHandler = null, $parameters = null)
     {
         try {
             if (!is_callable($handler)) {
@@ -321,9 +321,9 @@ class PaymentClient extends BaiduAbstractClient
                 throw new \InvalidArgumentException('Invalid callback.', -3);
             }
 
-            $this->verifyOrFail($params);
+            $this->verifyOrFail($parameters);
 
-            $result = call_user_func($handler, $params);
+            $result = call_user_func($handler, $parameters);
 
             if (!is_array($result) && !is_object($result)) {
                 throw new \UnexpectedValueException('Invalid result type of callback.', -5);
