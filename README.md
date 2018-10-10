@@ -33,7 +33,8 @@ Baidu Smart Mini-Program SDK for PHP
 2. [解密](#解密)
 3. [模版消息](#模版消息)（又称「消息模板」）
 4. [支付](#支付)（百度收银台）
-5. [深入](#深入)
+5. [支付通知](#支付通知)
+6. [深入](#深入)
 
 ## 如何使用
 
@@ -133,8 +134,55 @@ $data = (new BaiduTemplateMessage($templateId, $serviceClient))
 
 支付部分比较特殊，百度收银台是独立的聚合支付产品线，所以小程序接入稍显复杂，需要单独注册账号并认证。
 
-1. 按照 [官方文档](https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/access_process.md) 说明，入驻平台、创建服务等。
-2. TODO
+首先，按照 [官方文档](https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/access_process.md) 说明，入驻平台、创建服务等。
+
+这里单独说明 [设置中心](http://dianshang.baidu.com/platform/developer/index.html#!/set) 内几处需要注意的地方。
+
+1. 生成密钥可使用本 SDK 附带的一键脚本。
+
+    ```bash
+    bin/genrsa [密钥生成目录]
+    ```
+
+2. 开发者公钥保存后，需要稍等并刷新才会有平台公钥生成。
+
+3. 平台公钥导出后并非 PEM 格式，无法被 OpenSSL 正确识别，需进行转换；同样可使用 SDK 附带的脚本。
+
+    ```bash
+    bin/wrap-key <单行密钥文本>
+    ```
+
+*TODO*
+
+### 支付通知
+
+在支付成功等场景，百度会主动发起通知请求到我方服务器。我方服务器需对请求签名进行验证，确保此请求来自百度服务器，且数据未被篡改。
+
+同时，百度规定了响应格式，我方接口必须按照指定格式响应请求。
+
+在本 SDK 内，可直接使用如下方式实现以上两点。
+
+```php
+$response = $payment->handleNotification(
+    function ($parameters) {
+        // 在这里编写业务逻辑，发生任何错误只需抛异常即可。
+        // $parameters 是成功验证签名，并删除「签名」参数的请求参数数组。
+        // 若业务逻辑成功处理，可返回一数组或对象，它将被直接填入响应 `data` 字段。
+    },
+    function (\Exception $exception) {
+        // 在这里记录异常，例如发送到 Bugsnag 或 Sentry、记录至日志等。
+        // 切勿输出任何内容，在回调通知请求内，你无法得知输出了啥。
+    },
+    $_POST // 此参数可忽略，默认即为 $_POST；通常用于非 PHP-FPM 等特殊场景（例如 Swoole）传入请求参数数组。
+);
+
+// 根据框架不同，可使用不同的方式输出 $response。
+echo $response;
+```
+
+有点类似 JavaScript 的异步回调；在回调函数内，所有异常均会被妥善处理为指定格式响应，你需要关心的只有你的业务逻辑，并在第二个回调函数内记录一切发生的异常即可。
+
+你也可以使用任意 [Callable](http://php.net/manual/zh/language.types.callable.php) 代替闭包。
 
 ### 深入
 
