@@ -14,7 +14,7 @@ Baidu Smart Mini-Program SDK for PHP
 
 ❤️ 本项目 [GitHub](https://github.com/wi1dcard/baidu-mini-program-sdk-php) / [Gitee(码云)](https://gitee.com/wi1dcard/baidu-mini-program-sdk-php)。
 
-🎉 [支付宝开放平台第三方 PHP SDK](https://github.com/wi1dcard/alipay-sdk-php)。
+🎉 [支付宝开放平台第三方 PHP SDK](https://github.com/wi1dcard/alipay-sdk-php)，[微信小程序转百度小程序注意事项](./WECHAT-TO-BAIDU.md)。
 
 * **目录**
     * [主要目的](#主要目的)
