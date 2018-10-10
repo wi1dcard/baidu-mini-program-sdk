@@ -6,16 +6,16 @@
 
 ### 1) 总览
 
-| 检查项       | 微信                                           | 百度                               | 备注                                                                             |
-| ------------ | ---------------------------------------------- | ---------------------------------- | -------------------------------------------------------------------------------- |
-| 文件后缀     | `wxml` / `wxss` / `js` / `json`                | `swan` / `css` / `js` / `json`     |
-| 数据绑定     | `{{ xxx }}`                                    | 同微信                             | [参考链接](https://smartprogram.baidu.com/docs/develop/framework/view_data/)     |
-| 布局控制结构 | 以 `wx:` 开头                                  | 以 `s-` 开头                       | 缺少 `s-key`                                                                     |
-| 布局模板     | `<template ... data="{{exportData: myData}}">` | `<template ... data="{{myData}}">` | [参考链接](https://smartprogram.baidu.com/docs/develop/framework/view_template/) |
-| 组件事件     | 以 `bind` 或 `catch` 开头                      | 同微信                             | [参考链接](https://smartprogram.baidu.com/docs/develop/framework/view_incident/) |
-| JSON 文件    | -                                              | 同微信                             | [参考链接](https://smartprogram.baidu.com/docs/develop/tutorial/process_page/)   |
-| API          | `wx.*`                                         | `swan.*`                           |
-| 开发者工具   | -                                              | 类似微信                           |
+| 检查项       | 微信                                           | 百度                           | 备注                                                                             |
+| ------------ | ---------------------------------------------- | ------------------------------ | -------------------------------------------------------------------------------- |
+| 文件后缀     | `wxml` / `wxss` / `js` / `json`                | `swan` / `css` / `js` / `json` |
+| 数据绑定     | `{{ xxx }}`                                    | 同微信                         | [参考链接](https://smartprogram.baidu.com/docs/develop/framework/view_data/)     |
+| 布局控制结构 | 以 `wx:` 开头                                  | 以 `s-` 开头                   | 缺少 `s-key`                                                                     |
+| 布局模板     | `<template ... data="{{exportData: myData}}">` | 双大括号改为三大括号           | [参考链接](https://smartprogram.baidu.com/docs/develop/framework/view_template/) |
+| 组件事件     | 以 `bind` 或 `catch` 开头                      | 同微信                         | [参考链接](https://smartprogram.baidu.com/docs/develop/framework/view_incident/) |
+| JSON 文件    | -                                              | 同微信                         | [参考链接](https://smartprogram.baidu.com/docs/develop/tutorial/process_page/)   |
+| API          | `wx.*`                                         | `swan.*`                       |
+| 开发者工具   | -                                              | 类似微信                       |
 
 以上，部分检查项没有进行具体对比；如有部分特殊事件、控制结构等百度不支持，则需要特殊处理。
 
