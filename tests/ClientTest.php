@@ -86,7 +86,7 @@ class ClientTest extends TestCase
         $this->assertNotEmpty($templateId);
 
         $data = $tpl->get();
-        $this->assertGreaterThan(1, $data['total_count']);
+        $this->assertGreaterThan(0, $data['total_count']);
 
         $data = $tpl->delete($templateId);
     }
