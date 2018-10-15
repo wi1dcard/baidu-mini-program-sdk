@@ -152,7 +152,7 @@ $data = (new BaiduTemplateMessage($templateId, $serviceClient))
     bin/wrap-key <单行密钥文本>
     ```
 
-*TODO*
+> 截至 2018.10.15，我司提交的百度支付认证审核已持续一周处在「审核中」状态。短时间内支付部分可能无法测试，如有哪位大佬审核通过，欢迎通过 Issue 联系我。
 
 ### 支付通知
 
