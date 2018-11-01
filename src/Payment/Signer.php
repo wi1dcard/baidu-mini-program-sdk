@@ -20,7 +20,7 @@ class Signer
      *
      * @param int $algo
      */
-    public function __construct($algo = OPENSSL_ALGO_SHA256)
+    public function __construct($algo = OPENSSL_ALGO_SHA1)
     {
         $this->algo = $algo;
     }
@@ -135,9 +135,6 @@ class Signer
         $stringToBeSigned = '';
         foreach ($params as $k => $v) {
             $v = @(string) $v;
-            if (trim($v) === '' || $v[0] === '@') {
-                continue;
-            }
             $stringToBeSigned .= "&{$k}={$v}";
         }
         $stringToBeSigned = substr($stringToBeSigned, 1);
