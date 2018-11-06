@@ -179,7 +179,7 @@ class PaymentClient extends BaiduAbstractClient
             'orderId'      => $orderId,
             'userId'       => $userId,
             'refundType'   => $refundType,
-            'refundReason' => $refundType,
+            'refundReason' => $refundReason,
             'tpOrderId'    => $tpOrderId,
             'appKey'       => $this->appKey,
         ];
@@ -321,7 +321,7 @@ class PaymentClient extends BaiduAbstractClient
                 throw new \InvalidArgumentException('Invalid callback.', -3);
             }
 
-            $this->verifyOrFail($parameters);
+            $parameters = $this->verifyOrFail($parameters);
 
             $result = call_user_func($handler, $parameters);
 
