@@ -196,8 +196,8 @@ class PaymentClient extends BaiduAbstractClient
      *
      * @param int $orderId
      * @param int $userId
-     * @param integer $type
-     * 
+     * @param int $type
+     *
      * @return mixed
      */
     public function syncOrderStatus($orderId, $userId, $type = 3)
