@@ -192,6 +192,43 @@ class PaymentClient extends BaiduAbstractClient
     }
 
     /**
+     * 取消核销接口
+     *
+     * @param int $orderId
+     * @param int $userId
+     * @param integer $type
+     * 
+     * @return mixed
+     */
+    public function syncOrderStatus($orderId, $userId, $type = 3)
+    {
+        $request = $this->buildSyncOrderStautsRequest($orderId, $userId, $type);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        return $this->parseResponse($response, 'errno', 'msg');
+    }
+
+    protected function buildSyncOrderStautsRequest($orderId, $userId, $type)
+    {
+        $uri = 'https://nop.nuomi.com/nop/server/rest';
+
+        $data = [
+            'method'       => 'nuomi.cashier.syncorderstatus',
+            'orderId'      => $orderId,
+            'userId'       => $userId,
+            'type'         => $type,
+            'appKey'       => $this->appKey,
+        ];
+
+        $data['rsaSign'] = $this->signer->generateByParams($data, $this->getPrivateKey());
+
+        $body = \GuzzleHttp\Psr7\build_query($data);
+
+        return new Request('POST', $uri, [], $body);
+    }
+
+    /**
      * 为小程序端发起订单的 `swan.requestPolymerPayment` 接口生成签名
      *
      * @param string|int $tpOrderId
