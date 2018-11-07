@@ -48,7 +48,7 @@ class PaymentClient extends BaiduAbstractClient
     /**
      * 创建支付客户端
      *
-     * @param string|int $dealId     百度收银台 Deal ID，又称 App ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
+     * @param string|int $dealId     百度收银台 Deal ID {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
      * @param string     $appKey     百度收银台 App Key，此值并非智能小程序平台分配，请不要混淆 {@link https://dianshang.baidu.com/platform/doclist/index.html#!/doc/nuomiplus_1_guide/mini_program_cashier/parameter.md}
      * @param mixed      $privateKey PEM 格式的应用私钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-private.php}
      * @param mixed      $publicKey  PEM 格式的平台公钥字符串，或以 `file://` 开头的密钥文件路径 {@link http://php.net/manual/en/function.openssl-pkey-get-public.php}
@@ -117,12 +117,13 @@ class PaymentClient extends BaiduAbstractClient
     /**
      * 订单状态查询接口
      *
+     * @param int        $appId
      * @param string     $orderId
      * @param string|int $userId
      *
      * @return mixed
      */
-    public function orderDetail($orderId, $userId)
+    public function orderDetail($appId, $orderId, $userId)
     {
         $request = $this->buildOrderDetailRequest($orderId, $userId);
 
@@ -131,10 +132,10 @@ class PaymentClient extends BaiduAbstractClient
         return $this->parseResponse($response, 'errno', 'errmsg');
     }
 
-    protected function buildOrderDetailRequest($orderId, $userId)
+    protected function buildOrderDetailRequest($appId, $orderId, $userId)
     {
         $data = [
-            'dealId'  => $this->dealId,
+            'appId'  => $appId,
             'appKey'  => $this->appKey,
             'orderId' => $orderId,
             'siteId'  => $userId,
