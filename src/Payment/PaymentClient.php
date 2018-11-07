@@ -135,7 +135,7 @@ class PaymentClient extends BaiduAbstractClient
     protected function buildOrderDetailRequest($appId, $orderId, $userId)
     {
         $data = [
-            'appId'  => $appId,
+            'appId'   => $appId,
             'appKey'  => $this->appKey,
             'orderId' => $orderId,
             'siteId'  => $userId,
