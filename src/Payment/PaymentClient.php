@@ -125,7 +125,7 @@ class PaymentClient extends BaiduAbstractClient
      */
     public function orderDetail($appId, $orderId, $userId)
     {
-        $request = $this->buildOrderDetailRequest($orderId, $userId);
+        $request = $this->buildOrderDetailRequest($appId, $orderId, $userId);
 
         $response = $this->httpClient->sendRequest($request);
 
