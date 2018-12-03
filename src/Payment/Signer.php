@@ -135,6 +135,9 @@ class Signer
         $stringToBeSigned = '';
         foreach ($params as $k => $v) {
             $v = @(string) $v;
+            if ($v == "") {
+                continue;
+            }
             $stringToBeSigned .= "&{$k}={$v}";
         }
         $stringToBeSigned = substr($stringToBeSigned, 1);
