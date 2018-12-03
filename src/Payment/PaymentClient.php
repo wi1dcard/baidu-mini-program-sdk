@@ -236,12 +236,13 @@ class PaymentClient extends BaiduAbstractClient
      *
      * @return string
      */
-    public function signForPolymerPayment($tpOrderId)
+    public function signForPolymerPayment($tpOrderId, $totalAmount)
     {
         $params = [
             'appKey'    => $this->appKey,
             'dealId'    => $this->dealId,
             'tpOrderId' => $tpOrderId,
+            'totalAmount' => $totalAmount,
         ];
 
         return $this->signer->generateByParams($params, $this->privateKey);
