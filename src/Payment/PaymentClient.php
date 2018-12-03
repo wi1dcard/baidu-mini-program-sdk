@@ -233,6 +233,7 @@ class PaymentClient extends BaiduAbstractClient
      * 为小程序端发起订单的 `swan.requestPolymerPayment` 接口生成签名
      *
      * @param string|int $tpOrderId
+     * @param string|int $totalAmount
      *
      * @return string
      */
