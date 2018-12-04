@@ -233,15 +233,17 @@ class PaymentClient extends BaiduAbstractClient
      * 为小程序端发起订单的 `swan.requestPolymerPayment` 接口生成签名
      *
      * @param string|int $tpOrderId
+     * @param string|int $totalAmount
      *
      * @return string
      */
-    public function signForPolymerPayment($tpOrderId)
+    public function signForPolymerPayment($tpOrderId, $totalAmount)
     {
         $params = [
-            'appKey'    => $this->appKey,
-            'dealId'    => $this->dealId,
-            'tpOrderId' => $tpOrderId,
+            'appKey'      => $this->appKey,
+            'dealId'      => $this->dealId,
+            'tpOrderId'   => $tpOrderId,
+            'totalAmount' => $totalAmount,
         ];
 
         return $this->signer->generateByParams($params, $this->privateKey);
