@@ -159,19 +159,21 @@ class PaymentClient extends BaiduAbstractClient
      * @param string|int $tpOrderId
      * @param int        $refundType
      * @param string     $refundReason
+     * @param int $applyRefundMoney
+     * @param string $bizRefundBatchId
      *
      * @return mixed
      */
-    public function orderRefund($orderId, $userId, $tpOrderId, $refundType = 1, $refundReason = '')
+    public function orderRefund($orderId, $userId, $tpOrderId, $refundType = 1, $refundReason = '', $applyRefundMoney = 0, $bizRefundBatchId = null)
     {
-        $request = $this->buildOrderRefundRequest($orderId, $userId, $tpOrderId, $refundType, $refundReason);
+        $request = $this->buildOrderRefundRequest($orderId, $userId, $tpOrderId, $refundType, $refundReason, $applyRefundMoney, $bizRefundBatchId);
 
         $response = $this->httpClient->sendRequest($request);
 
         return $this->parseResponse($response, 'errno', 'msg');
     }
 
-    protected function buildOrderRefundRequest($orderId, $userId, $tpOrderId, $refundType, $refundReason)
+    protected function buildOrderRefundRequest($orderId, $userId, $tpOrderId, $refundType, $refundReason, $applyRefundMoney, $bizRefundBatchId)
     {
         $uri = 'https://nop.nuomi.com/nop/server/rest';
 
@@ -183,6 +185,8 @@ class PaymentClient extends BaiduAbstractClient
             'refundReason' => $refundReason,
             'tpOrderId'    => $tpOrderId,
             'appKey'       => $this->appKey,
+            'applyRefundMoney' => $applyRefundMoney,
+            'bizRefundBatchId' => $bizRefundBatchId === null ? uniqid() : $bizRefundBatchId,
         ];
 
         $data['rsaSign'] = $this->signer->generateByParams($data, $this->getPrivateKey());
