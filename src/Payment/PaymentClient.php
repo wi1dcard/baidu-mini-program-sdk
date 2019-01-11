@@ -159,8 +159,8 @@ class PaymentClient extends BaiduAbstractClient
      * @param string|int $tpOrderId
      * @param int        $refundType
      * @param string     $refundReason
-     * @param int $applyRefundMoney
-     * @param string $bizRefundBatchId
+     * @param int        $applyRefundMoney
+     * @param string     $bizRefundBatchId
      *
      * @return mixed
      */
@@ -178,13 +178,13 @@ class PaymentClient extends BaiduAbstractClient
         $uri = 'https://nop.nuomi.com/nop/server/rest';
 
         $data = [
-            'method'       => 'nuomi.cashier.applyorderrefund',
-            'orderId'      => $orderId,
-            'userId'       => $userId,
-            'refundType'   => $refundType,
-            'refundReason' => $refundReason,
-            'tpOrderId'    => $tpOrderId,
-            'appKey'       => $this->appKey,
+            'method'           => 'nuomi.cashier.applyorderrefund',
+            'orderId'          => $orderId,
+            'userId'           => $userId,
+            'refundType'       => $refundType,
+            'refundReason'     => $refundReason,
+            'tpOrderId'        => $tpOrderId,
+            'appKey'           => $this->appKey,
             'applyRefundMoney' => $applyRefundMoney,
             'bizRefundBatchId' => $bizRefundBatchId === null ? uniqid() : $bizRefundBatchId,
         ];
