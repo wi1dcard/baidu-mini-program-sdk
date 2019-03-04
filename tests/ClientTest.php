@@ -12,7 +12,7 @@ class ClientTest extends TestCase
      */
     protected $baidu;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->assertNotEmpty(
             $appSecret = getenv('APP_SECRET')
