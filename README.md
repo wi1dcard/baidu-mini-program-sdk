@@ -46,8 +46,6 @@ Baidu Smart Mini-Program SDK for PHP
     composer require wi1dcard/baidu-mini-program-sdk:dev-master
     ```
 
-    > Composer 中国镜像近期处于维护状态；若无法安装，建议使用原版 Packagist 或使用 [Laravel-China 镜像](https://wi1dcard.cn/documents/packagist-mirror-in-china/)。
-
 2. 创建 `BaiduClient`。
 
     ```php
